@@ -1,0 +1,3 @@
+package myFunc
+
+func Hi()
