@@ -1,7 +1,175 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="25bc195a-e4f7-45fa-b361-3a45efc2f0aa" name="Default Changelist" comment="" />
+    <list default="true" id="25bc195a-e4f7-45fa-b361-3a45efc2f0aa" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/myCryto-study.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/A/a.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/B/b.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CandidateSortTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CandidateTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Hash2Bytes.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HashLink/hashTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/POS/dpos.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/POS/pos.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/POS/prop.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PposProtoTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RocketDBtest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SQLiteTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/StringTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TestDelSlice.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TestStorage.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UUIDtest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/algorithm/ECC.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/algorithm/Triangle.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/algorithm/paxos.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/algorithm/search.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/algorithm/search2.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/algorithm/sort.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/algorithm/test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/base64.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/channelTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/compareBigInt.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/condTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/contextTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deferAndPanic.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/empty.s" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extends.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/getGoroutineID.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/header_base64.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/http.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/httpContext.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/interfaceToType.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mapPtr.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mapTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/md5.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mutextTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myAtexit.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myBlockChain/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myBlockChain/example.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myBlockChain/example.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myBlockChain/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myFunc/myFunc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myGoroutineTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myInteresting.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myMutex.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mySemaphore.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myTest2.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myTime.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mychan.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mygotest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pinyin.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/practice/search.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/practice/sort.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/produce.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rwmutexTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scan_account(1).go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scan_account(2).go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sliceTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sols/CryptoKitties.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/splitStr.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tes.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test1.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test11.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test2.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test3.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test4.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test5.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testAB.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testArr.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testAtomic.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testBit.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testByteArr.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testByteLen.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testCGO.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testChan.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testChanHandle.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testChannel.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testCircleReference.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testCircleReference/referenceA/reA.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testCircleReference/referenceB/reB.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testCompare.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testConst.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testConstant.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testCopyMap.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testCopyMapAndSlice.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testCopySliceStruct.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testDeathCircle.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testDeepCopy.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testDoubleChan.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testETHclient.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testErr.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testEscape.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testFlagOs.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testGob.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testIP.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testInteralSlice.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testInterface.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testInterface2.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testLogPrint.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testMalloc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testMalloc2.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testMap.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testMapForRange.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testMapInit.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testMapSize.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testMapSlice.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testMapToMap.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testMethodSet.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testMulIf.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testMybox/mybox.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testMychain/mychain.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testNilSliceReturn.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testOnce.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testOnceUsing.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testPackage.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testPlugin.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testPool.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testPoolUsed.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testPtrArr.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testRLP.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testRLPdata.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testRand.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testReference.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testReflect.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testRuntime2_1.10.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testRuntime2_1.8.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testRuntime2_1.9.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testSignal.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testSignal2.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testSliceCopy.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testSliceFunc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testSort.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testString.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testStrings.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testSyscall.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testTimer.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testType.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testUinitptr.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testUnOverFlow.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testUnsafe.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testVRF/testGoogleVRF.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testWaitGroup.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testfeed/myfeed.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testtestAa.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/timeoutTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tokens/GavinToken.sol" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tokens/filedir/GavinToken_sol_GavinToken.abi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tokens/filedir/GavinToken_sol_GavinToken.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tokens/filedir/GavinToken_sol_Token.abi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tokens/filedir/GavinToken_sol_Token.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tokens/gavinToken.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tokens/gavinToken2.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tt.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testBigInt.go" beforeDir="false" afterPath="$PROJECT_DIR$/testBigInt.go" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,14 +187,35 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/testPublicKey.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="456">
-              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
               <folding>
                 <element signature="e#14#76#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testBigInt.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="131">
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
+              <folding>
+                <element signature="e#14#44#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="168">
+              <caret line="7" column="3" lean-forward="true" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -66,29 +255,34 @@
     </findStrings>
   </component>
   <component name="GOROOT" path="$USER_HOME$/go-sdk/go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/testByteEnd.go" />
-        <option value="$PROJECT_DIR$/testBigInt.go" />
         <option value="$PROJECT_DIR$/string2byte.go" />
         <option value="$PROJECT_DIR$/NilPointCovert.go" />
         <option value="$PROJECT_DIR$/stringLength.go" />
         <option value="$PROJECT_DIR$/../github.com/PlatONnetwork/PlatON-Go/ethdb/database.go" />
         <option value="$PROJECT_DIR$/testLevelInterator.go" />
         <option value="$PROJECT_DIR$/testPublicKey.go" />
+        <option value="$PROJECT_DIR$/testBigInt.go" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="VNPjxzxn" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="65" />
     <option name="y" value="-4" />
     <option name="width" value="1855" />
     <option name="height" value="1084" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -110,6 +304,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.import.settings.migrated" value="true" />
@@ -185,15 +380,15 @@
     </recent_temporary>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="1855" height="1084" extended-state="7" />
+    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.2642344" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2642344" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33875892" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.33875892" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39979655" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -217,7 +412,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.27466938" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.33875892" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39979655" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -258,16 +453,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
           <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-          <folding>
-            <element signature="e#14#43#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testBigInt.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
           <folding>
             <element signature="e#14#43#0" expanded="true" />
           </folding>
@@ -353,10 +538,27 @@
     <entry file="file://$PROJECT_DIR$/testPublicKey.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="456">
-          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
           <folding>
             <element signature="e#14#76#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testBigInt.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="e#14#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="7" column="3" lean-forward="true" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
         </state>
       </provider>
     </entry>

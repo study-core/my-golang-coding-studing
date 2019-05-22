@@ -1,0 +1,346 @@
+syntax = "proto3";
+package entity;
+
+message Candidate {
+    uint32  channelId   = 1;
+    uint32  termType    = 2;
+    string  version     = 3;
+    uint32  clientIp    = 4;
+    string  equipmentId = 6;
+    uint32  cityId      = 7;
+    float   longitude   = 8;
+    float   latitude    = 9;
+    uint32  carrier     = 11;
+}
+
+message CmdReqHead {
+    uint32 appId = 3;
+}
+
+message UserBaseInfo {
+    uint64 userId       = 1;
+    string accountName  = 2;
+    string mobile       = 3;
+    string nickName     = 10;
+    string headIcon     = 12;
+    uint32 gender       = 13;
+    string mail         = 14;
+    uint32 birthday     = 15;
+}
+
+message UserExtInfo {
+    uint64 userId       = 1;
+    string trueName     = 10;
+    uint32 marriage     = 11;
+    string income       = 12;
+    string identity     = 13;
+    uint32 education    = 14;
+    uint32 career       = 15;
+}
+
+
+message UserRegisterReq {
+    CmdReqHead          reqHead     = 10;
+    UserBaseInfo        baseInfo    = 1;
+    string              password    = 3;
+}
+
+
+message UserRegisterRespData {
+    uint64 userId = 1;
+}
+
+
+message UserRegisterResp {
+    int32                   status  = 1;
+    string                  msg     = 2;
+    UserRegisterRespData    data    = 3;
+}
+
+
+message UserOpenRegisterReq {
+    CmdReqHead reqHead = 10;
+    UserBaseInfo baseInfo = 1;
+    string open_id = 3;
+    uint32 open_type = 4;
+}
+
+//修改基本信息
+message UpdateUserBaseReq {
+    CmdReqHead reqHead = 10;
+    UserBaseInfo baseInfo = 1;
+}
+
+message UpdateUserBaseResp {
+    int32 status = 1;
+    string msg = 2;
+
+}
+
+message UpdateUserExtReq {
+    CmdReqHead reqHead = 10;
+    UserExtInfo extInfo = 1;
+}
+
+message UpdateUserExtResp {
+    int32 status = 1;
+    string msg = 2;
+
+}
+
+//修改密码
+message ChangePwdReq {
+    CmdReqHead reqHead = 10;
+    uint64 userId = 1;
+    string oldPasswd = 2; //MD5(password)
+    string newPasswd = 3; //MD5(password)
+}
+
+
+message ChangePwdResp {
+    int32 status = 1;
+    string msg = 2;
+}
+
+//重置密码
+message ResetPwdReq {
+    CmdReqHead reqHead = 10;
+    uint64 userId = 1;
+    string mobile = 2;
+    string newPasswd = 3; //MD5(password)
+}
+
+
+message ResetPwdResp {
+    int32 status = 1;
+    string msg = 2;
+}
+
+//重置支付密码
+message ResetPayPwdReq {
+    CmdReqHead reqHead = 10;
+    uint64 userId = 1;
+    string mobile = 2;
+    string newPayPasswd = 3;
+}
+
+
+message ResetPayPwdResp {
+    int32 status = 1;
+    string msg = 2;
+}
+
+message CheckUserPayPwdReq {
+    CmdReqHead reqHead = 10;
+    uint64 userId = 1;
+    string password = 2;
+}
+
+
+message CheckUserPayPwdResp {
+    int32 status = 1;
+    string msg = 2;
+}
+
+message RetrieveUserHasPayPwdReq {
+    CmdReqHead reqHead = 10;
+    uint64 userId = 1;
+}
+
+
+message RetrieveUserHasPayPwdResp {
+    int32 status = 1;
+    string msg = 2;
+}
+
+message RetrieveUserBaseReq {
+    CmdReqHead reqHead = 10;
+    uint64 userId = 1;
+}
+
+message RetrieveUserBaseRespData {
+    UserBaseInfo userBaseInfo = 1;
+}
+message RetrieveUserBaseResp {
+    int32 status = 1;
+    string msg = 2;
+    RetrieveUserBaseRespData data = 3;
+}
+
+message RetrieveUserExtReq {
+    CmdReqHead reqHead = 10;
+    uint64 userId = 1;
+}
+
+message RetrieveUserExtRespData {
+    UserExtInfo userExtInfo = 1;
+}
+
+message RetrieveUserExtResp {
+    int32 status = 1;
+    string msg = 2;
+    RetrieveUserExtRespData data = 3;
+}
+
+
+message UserLoginRespData {
+    UserBaseInfo userBaseInfo = 1;
+}
+
+message UserLoginPasswordReq {
+    CmdReqHead reqHead = 10;
+    string accountName = 2;
+    string mobile = 3;
+    string password = 4;
+}
+
+
+message UserLoginPasswordResp {
+    int32 status = 1;
+    string msg = 2;
+    UserLoginRespData data = 3;
+}
+
+message UserMobileLoginReq {
+    CmdReqHead reqHead = 10;
+    string mobile = 3;
+}
+
+message UserMobileLoginResp {
+    int32 status = 1;
+    string msg = 2;
+    UserLoginRespData data = 3;
+}
+
+message OpenIdLoginReq {
+    CmdReqHead reqHead = 10;
+    string open_id = 1;
+    uint32 open_type = 2;
+}
+
+
+message OpenIdLoginResp {
+    int32 status = 1;
+    string msg = 2;
+    UserLoginRespData data = 3;
+}
+
+message UserBindOpenIdReq {
+    CmdReqHead reqHead = 10;
+    string open_id = 1;
+    uint32 open_type = 2;
+    uint64 userId = 3;
+}
+
+message UserBindOpenIdResp {
+    int32 status = 1;
+    string msg = 2;
+}
+
+message UserAddressBasic {
+    uint64 id = 1;
+    string name = 2;
+    uint32 countryId = 3;
+    uint32 provinceId = 4;
+    uint32 cityId = 5;
+    uint32 districtId = 6;
+    string address = 7;
+    string postCode = 8;
+    string phone = 9;
+    bool isDefault = 10;
+
+}
+
+message UserAddressRespData {
+    uint64 userAddressId = 3;
+}
+
+message CreateUserAddressReq {
+    CmdReqHead reqHead = 10;
+    uint64 userId = 1;
+    UserAddressBasic basic = 2;
+}
+
+message CreateUserAddressResp {
+    int32 status = 1;
+    string msg = 2;
+    UserAddressRespData data = 3;
+}
+
+message RetrieveUserAddressRespData {
+    repeated UserAddressBasic basics = 1;
+}
+
+message RetrieveUserAddressReq {
+    CmdReqHead reqHead = 10;
+    uint64 userId = 1;
+}
+
+message RetrieveUserAddressResp {
+    int32 status = 1;
+    string msg = 2;
+    RetrieveUserAddressRespData data = 3;
+}
+
+message RetrieveUserDefaultAddressReq {
+    CmdReqHead reqHead = 10;
+    uint64 userId = 1;
+}
+
+message RetrieveUserDefaultAddressResp {
+    int32 status = 1;
+    string msg = 2;
+    UserAddressBasic data = 3;
+}
+
+message UpdateUserAddressReq {
+    CmdReqHead reqHead = 10;
+    uint64 userAddressId = 1;
+    UserAddressBasic basic = 2;
+}
+
+message UpdateUserAddressResp {
+    int32 status = 1;
+    string msg = 2;
+}
+
+message DeleteUserAddressReq {
+    CmdReqHead reqHead = 10;
+    uint64 userAddressId = 1;
+}
+
+message DeleteUserAddressResp {
+    int32 status = 1;
+    string msg = 2;
+
+}
+
+service UserService {
+    rpc UserRegister (UserRegisterReq) returns (UserRegisterResp);
+    rpc UserOpenRegister (UserOpenRegisterReq) returns (UserRegisterResp);
+
+    rpc UserBindOpenId (UserBindOpenIdReq) returns (UserBindOpenIdResp);
+    rpc UpdateUserBase (UpdateUserBaseReq) returns (UpdateUserBaseResp);
+    rpc UpdateUserExt (UpdateUserExtReq) returns (UpdateUserExtResp);
+    rpc ChangePwd (ChangePwdReq) returns (ChangePwdResp);
+    rpc ResetPwd (ResetPwdReq) returns (ResetPwdResp);
+    rpc ResetPayPwd (ResetPayPwdReq) returns (ResetPayPwdResp);
+    rpc UserLoginPassword (UserLoginPasswordReq) returns (UserLoginPasswordResp);
+    rpc UserMobileLogin (UserMobileLoginReq) returns (UserMobileLoginResp);
+    rpc OpenIdLogin (OpenIdLoginReq) returns (OpenIdLoginResp);
+    rpc CheckUserPayPwd (CheckUserPayPwdReq) returns (CheckUserPayPwdResp);
+    rpc RetrieveUserBase (RetrieveUserBaseReq) returns (RetrieveUserBaseResp);
+    rpc RetrieveUserExt (RetrieveUserExtReq) returns (RetrieveUserExtResp);
+    rpc RetrieveUserHasPayPwd (RetrieveUserHasPayPwdReq) returns (RetrieveUserHasPayPwdResp);
+
+    rpc CreateUserAddress (CreateUserAddressReq) returns (CreateUserAddressResp);
+    rpc RetrieveUserAddress (RetrieveUserAddressReq) returns (RetrieveUserAddressResp);
+    rpc RetrieveUserDefaultAddress (RetrieveUserDefaultAddressReq) returns (RetrieveUserDefaultAddressResp);
+    rpc UpdateUserAddress (UpdateUserAddressReq) returns (UpdateUserAddressResp);
+    rpc DeleteUserAddress (DeleteUserAddressReq) returns (DeleteUserAddressResp);
+
+}
+
+
+
+
