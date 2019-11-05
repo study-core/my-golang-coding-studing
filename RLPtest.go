@@ -1,10 +1,11 @@
 package main
 
 import (
-	"bytes"
-	"encoding/json"
+	//"bytes"
 	"fmt"
-	"math"
+	//"github.com/PlatONnetwork/PlatON-Go/common"
+	"github.com/PlatONnetwork/PlatON-Go/rlp"
+	//"math"
 
 	//"math"
 
@@ -137,71 +138,155 @@ func main() {
 	//amount2 := big.NewInt(90)
 	//ab2, _ := rlp.EncodeToBytes(amount2)
 	//fmt.Println("amount2 rlp:", ab2)
-	//
-	////a := []byte{194, 12, 45}
-	////b := []byte{194, 24, 90}
-	//
-	////a := []byte{9}
-	////aab, _ := rlp.EncodeToBytes(a)
-	////fmt.Println(aab)
-	//
-	//
-	//a11 := [][]byte{eb, []byte{24, 90}}
-	//a11b, _ := rlp.EncodeToBytes(a11)
-	//fmt.Println(a11b)
-	//
-	//
-	//var pqueue []restricting.RestrictingPlan
-	//
-	//err := rlp.DecodeBytes(a11b, &pqueue)
-	//fmt.Println(err)
 
 
-	paramMap := make(map[string]interface{}, 0)
-
-	paramMap["a"] = "a"
-
-	paramMap["f"] = "f"
-
-	paramMap["qeq"] = 1122
-	paramMap["e"] = 33
-	paramMap["b"] = 444
-	paramMap["c"] = 55
-
-	a1, _ := json.Marshal(paramMap)
-	fmt.Println(a1, "\n", string(a1))
 
 
-	paramMap2 := make(map[string]interface{}, len(paramMap))
 
+	/*var plans []restricting.RestrictingPlan
 
-	paramMap2["f"] = "f"
+	balance, _ := new(big.Int).SetString("50000000000000000000", 10)
 
-	paramMap2["b"] = 444
-	paramMap2["e"] = 33
-
-	paramMap2["c"] = 55
-	paramMap2["a"] = "a"
-	paramMap2["qeq"] = 1122
-
-
-	a2, _ := json.Marshal(paramMap2)
-	fmt.Println(a2, "\n", string(a2))
-
-
-	fmt.Println(bytes.Equal(a1, a2))
-
-	fmt.Println(fmt.Sprint(math.MaxUint32))
-	fmt.Println(fmt.Sprint(math.MaxUint32/(21000)))
-
-
-	resCh  := make(chan int, 10)
-
-	for i := 0; i <4; i++ {
-		resCh <- i
+	p1 := restricting.RestrictingPlan{
+		Epoch:  1,
+		Amount:  balance,
 	}
-	close(resCh)
 
-	fmt.Println(len(resCh))
+
+
+	plans = append(plans, p1)
+
+	pjson, _ := json.Marshal(plans)
+	fmt.Println("plan 元数据:", string(pjson))
+
+	pByte, _ := rlp.EncodeToBytes(plans)
+	fmt.Println("Plans rlp:", pByte)
+
+
+	p1B, _ := rlp.EncodeToBytes(p1)
+	fmt.Println("P1 rlp:", p1B)
+
+	epoch := uint64(1)
+	eb, _ := rlp.EncodeToBytes(epoch)
+	fmt.Println("epoch rlp:", eb)
+
+	amount := balance
+	ab, _ := rlp.EncodeToBytes(amount)
+	fmt.Println("amount rlp:", ab)*/
+
+	//var pp []restricting.RestrictingPlan
+	//
+	//rlp.DecodeBytes(pByte, &pp)
+	//
+	//ppjson, _ := json.Marshal(pp)
+	//fmt.Println("反编译回来:", string(ppjson))
+
+
+
+
+
+
+
+
+	//paramMap := make(map[string]interface{}, 0)
+	//
+	//paramMap["a"] = "a"
+	//
+	//paramMap["f"] = "f"
+	//
+	//paramMap["qeq"] = 1122
+	//paramMap["e"] = 33
+	//paramMap["b"] = 444
+	//paramMap["c"] = 55
+	//
+	//a1, _ := json.Marshal(paramMap)
+	//fmt.Println(a1, "\n", string(a1))
+
+
+	//paramMap2 := make(map[string]interface{}, len(paramMap))
+	//
+	//
+	//paramMap2["f"] = "f"
+	//
+	//paramMap2["b"] = 444
+	//paramMap2["e"] = 33
+	//
+	//paramMap2["c"] = 55
+	//paramMap2["a"] = "a"
+	//paramMap2["qeq"] = 1122
+	//
+	//
+	//a2, _ := json.Marshal(paramMap2)
+	//fmt.Println(a2, "\n", string(a2))
+	//
+	//
+	//fmt.Println(bytes.Equal(a1, a2))
+	//
+	//fmt.Println(fmt.Sprint(math.MaxUint32))
+	//fmt.Println(fmt.Sprint(math.MaxUint32/(21000)))
+	//
+	//
+	//resCh  := make(chan int, 10)
+	//
+	//for i := 0; i <4; i++ {
+	//	resCh <- i
+	//}
+	//close(resCh)
+	//
+	//fmt.Println(len(resCh))
+	//
+	//
+	//
+	//
+	//ar := []int{2, 8, 9}
+	//for i := 0; i < len(ar); i++ {
+	//	if ar[i] == 2 || ar[i] == 8 || ar[i] == 9 {
+	//		ar = append(ar[:i], ar[i+1:]...)
+	//		i--
+	//	}
+	//}
+	//
+	//fmt.Println(ar)
+	//
+	//
+	//aq := []int{2, 8, 9}
+	//for i, mem := range aq {
+	//	if mem == 2 || mem == 8 || mem == 9 {
+	//		aq = append(aq[:i], aq[i+1:]...)
+	//	}
+	//}
+	//
+	//fmt.Println(aq)
+
+
+
+	type test struct {
+		Name string
+		Age  uint64
+	}
+
+	arr := make([]*test, 0)
+
+	t1 := &test{
+		Name: "Eee",
+		Age:1,
+	}
+
+	t2 := &test{
+		Name: "eee",
+		Age: 2,
+	}
+
+	arr = append(arr, t1)
+	arr = append(arr, t2)
+
+	b, _ := rlp.EncodeToBytes(arr)
+	fmt.Println(b)
+
+	// go [204 197 131 69 101 101 1 197 131 101 101 101 2]
+	// py \xcc\xc5\x83Eee\x01\xc5\x83eee\x02
+	// py 0xcc 0xc5 0x83 0x45 0x65 0x65 0x1 0xc5 0x83 0x65 0x65 0x65 0x2
+	// py [204 197 131 69 101 101 1 197 131 101 101 101 2]
+	// py [204, 197, 131, 69, 101, 101, 1, 197, 131, 101, 101, 101, 2]
 
 }
