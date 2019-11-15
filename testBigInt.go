@@ -3,46 +3,58 @@ package main
 import (
 	"fmt"
 	"math/big"
-
 )
 
 func main() {
 
-	a := big.NewInt(10)
-
-	b := big.NewInt(6)
-
-	c := new(big.Int).Quo(a, b)
-
-	c2 := new(big.Int).Div(a, b)
-
-	//c := new(big.Int).And(a, b)   //10 && 3 == 0110 && 0011 == 0010 == 2
-
-	//c := new(big.Int).AndNot(a, b)
-	//
-	//c := new(big.Int).Div(a, b)
-	//
-	//c, d := new(big.Int).DivMod(a, b, big.NewInt(1))
-	//
-	//c := new(big.Int).Exp(a, b, big.NewInt(1))
-	//
-	//c := new(big.Int).Binomial(10, 3)
-	//
-	//c := new(big.Int).GCD(a, b, big.NewInt(1), big.NewInt(2))
-	//
-	//c := new(big.Int).MulRange(10, 3)
-	//
+	a :=  new(big.Int).SetInt64(int64(250))
+	b :=  new(big.Int).SetInt64(int64(1))
+	c :=  new(big.Int).SetInt64(int64(230))
+	d :=  new(big.Int).SetInt64(int64(251))
+	e :=  new(big.Int).SetInt64(int64(500))
 
 
+	f2, g2 := new(big.Int).DivMod(a, a, new(big.Int)) // 250/250  1 0
 
-	fmt.Print(c, c2)
-	start := big.NewInt(10)
-	end := big.NewInt(20)
+	fmt.Println(f2, g2)
 
-	c = new(big.Int).Sub(end, start)
 
-	fmt.Println("start", start.String(), "end", end.String(), "c", c.String())
+	f, g := new(big.Int).DivMod(b, a, new(big.Int)) // 1/250   0 1
 
-	end.Sub(end, start)
-	fmt.Println("start", start.String(), "end", end.String(), "c", c.String())
+	fmt.Println(f, g)
+
+
+	f4, g4 := new(big.Int).DivMod(c, a, new(big.Int)) // 230/250  0 230
+
+	fmt.Println(f4, g4)
+
+
+	f3, g3 := new(big.Int).DivMod(d, a, new(big.Int)) // 251/250  1 1
+
+	fmt.Println(f3, g3)
+
+
+	f5, g5 := new(big.Int).DivMod(e, a, new(big.Int)) // 500/250  2 0
+
+	fmt.Println(f5, g5)
+
+
+	target := big.NewInt(254)
+	tmp := big.NewInt(45)
+	fmt.Println(target, tmp)
+	target = mergeAmount(uint8(0), target, tmp)
+	fmt.Println(target, tmp)
+	target = mergeAmount(uint8(1), target, tmp)
+	fmt.Println(target, tmp)
+}
+
+
+func mergeAmount (mark uint8, target, tmp *big.Int) *big.Int {
+	if mark == 0 {
+		target = new(big.Int).Add(target, tmp)
+		return target
+	}else {
+		target = new(big.Int).Sub(target, tmp)
+		return target
+	}
 }
