@@ -1,143 +1,81 @@
-package main 
+package main
 
-import(
+import (
 	"fmt"
-	"errors"
-	"github.com/parnurzeal/gorequest"
-	"github.com/bitly/go-simplejson"
+	"math/big"
 )
 
+func main() {
 
+	/*// 对比 copy 和 append 的效率
 
-func HttpGet(url string, params interface{}) (string, error) {
-	fmt.Println("get请求链接地址:", url, params)
-	request := gorequest.New()
-	_, body, errs := request.Get(url).Query(params).End()
-	for _, err := range errs {
-		if err != nil {
-			fmt.Println("get请求链接地址:", url, params, "请求出错: err=", errs)
-			return "", errors.New("请求第三方网络发生错误")
-		}
-	}
-	fmt.Println("请求链接地址:", url, params, "返回的结果是: ", body)
-	return body, nil
+	subVersion := math.MaxInt32 - xutil.CalcVersion(1793)
+	sortVersion := common.Uint32ToBytes(subVersion)
+
+	shares, _ := new(big.Int).SetString("14444444777777", 10)
+	priority := new(big.Int).Sub(math.MaxBig104, shares)
+
+	b104Len := len(math.MaxBig104.Bytes())
+	zeros := make([]byte, b104Len)
+	prio := append(zeros, priority.Bytes()...)
+
+	num := common.Uint64ToBytes(uint64(456))
+	txIndex := common.Uint32ToBytes(uint32(52))
+
+	indexPre := len(staking.CanPowerKeyPrefix)
+	indexVersion := indexPre + len(sortVersion)
+	indexPrio := indexVersion + len(prio)
+	indexNum := indexPrio + len(num)
+	size := indexNum + len(txIndex)
+
+	start2 := time.Now()
+	key2 := append(staking.CanPowerKeyPrefix, append(sortVersion, append(prio,
+		append(num, txIndex...)...)...)...)
+	duration2 := time.Since(start2).Nanoseconds()
+
+	start1 := time.Now()
+	key1 := make([]byte, size)
+	copy(key1[:len(staking.CanPowerKeyPrefix)], staking.CanPowerKeyPrefix)
+	copy(key1[indexPre:indexVersion], sortVersion)
+	copy(key1[indexVersion:indexPrio], prio)
+	copy(key1[indexPrio:indexNum], num)
+	copy(key1[indexNum:], txIndex)
+	duration1 := time.Since(start1).Nanoseconds()
+
+	fmt.Println("key1:\n", fmt.Sprint(key1), "duration1:\n", duration1)
+	fmt.Println("key2:\n", fmt.Sprint(key2), "duration2:\n", duration2)
+	fmt.Println(bytes.Equal(key1, key2))*/
+
+	// 对比 fmt.Sprint 和 strconv.Itoa 及 strconv.FormatInt 的效率
+
+	//start := time.Now()
+	//for i := uint32(0); i < 10000; i++ {
+	//	fmt.Sprint(i)
+	//}
+	//fmt.Printf("fmt.Sprint, %d \n", time.Since(start).Nanoseconds())
+	//
+	//start2 := time.Now()
+	//for i := uint32(0); i < 10000; i++ {
+	//	strconv.Itoa(int(i))
+	//}
+	//fmt.Printf("strconv.Itoa, %d \n", time.Since(start2).Nanoseconds())
+	//
+	//start3 := time.Now()
+	//for i := uint32(0); i < 10000; i++ {
+	//	strconv.FormatInt(int64(i), 10)
+	//}
+	//fmt.Printf("strconv.FormatInt, %d \n", time.Since(start3).Nanoseconds())
+
+	total, _ := new(big.Int).SetString("262215742000000000000000000", 10)
+	blocks, _ := new(big.Int).SetString("15759500", 10)
+
+	balance := new(big.Int).Div(total, blocks)
+
+	fmt.Println("balance:", balance)
+
+	MillionLAT, _ := new(big.Int).SetString("1000000000000000000000000", 10)
+
+	num := new(big.Int).Div(MillionLAT, balance)
+
+	fmt.Println("num:", num)
 }
-
-
-func HttpPostJson(url string, params interface{}) (string, error) {
-	fmt.Println("postJson请求链接地址:", url, params)
-	request := gorequest.New()
-	_, body, errs := request.Post(url).Send(params).End()
-	for _, err := range errs {
-		if err != nil {
-			fmt.Println("postJson请求链接地址:", url, params, "请求出错: err=", errs)
-			return "", errors.New("请求第三方网络发生错误")
-		}
-	}
-	fmt.Println("请求链接地址:", url, params, "返回的结果是: ", body)
-	return body, nil
-}
-
-func main(){
-	//获取access_token: 用httpClinet发一个 get请求 调用这个接口  https://oapi.dingtalk.com/gettoken?corpid=id&corpsecret=secrect
-	access_token_url := "https://oapi.dingtalk.com/gettoken?corpid=ding09b9a7dcac3d504835c2f4657eb6378f&corpsecret=bwpDywU-Cxq87v-2EvG5FDIaGoZ7Dmos2k3xZyVA8b3EMV7OkMRqap-HCo686s5D"
-	result, err := HttpGet(access_token_url, nil)
-	if err != nil {
-		fmt.Println("请求异常:" + err.Error())
-	}
-
-	fmt.Println("获取access_token返回的结果是: ", result)
-
-	//处理返回内容 反序列化 string -> json
-	json, err := simplejson.NewJson([]byte(result))
-	if nil != err {
-		fmt.Println("json解析异常")
-	}
-	//从json中拿到 access_token的值
-	access_token := json.Get("access_token").MustString()
-
-	fmt.Println("\n\n")
-
-	//获取部门Id列表
-	departmentId_url := "https://oapi.dingtalk.com/department/list_ids"
-	departmentId_params := make(map[string]interface{}, 0)
-	departmentId_params["access_token"] = access_token
-	departmentId_params["id"] = "1"
-	
-	
-	departmentId, err := HttpGet(departmentId_url, departmentId_params)
-	if err != nil {
-		fmt.Println("请求异常:" + err.Error())
-	}
-	fmt.Println("获取部门Id列表返回的结果是: ", departmentId)
-
-	fmt.Println("\n\n")
-
-	//获取部门列表
-	departmentInfo_url := "https://oapi.dingtalk.com/department/list"
-	departmentInfo_params := make(map[string]interface{}, 0)
-	departmentInfo_params["access_token"] = access_token
-	departmentInfo_params["id"] = "1"
-	
-	
-	departmentInfo, err := HttpGet(departmentInfo_url, departmentInfo_params)
-	if err != nil {
-		fmt.Println("请求异常:" + err.Error())
-	}
-	fmt.Println("获取部门列表返回的结果是: ", departmentInfo)
-	fmt.Println("\n\n")
-
-
-	//获取部门成员（详情）
-	userInfo_url := "https://oapi.dingtalk.com/user/list"
-	params := make(map[string]interface{}, 0)
-	params["access_token"] = access_token
-	params["department_id"] = "1"
-	params["offset"] = "0"
-	params["size"] = "100"
-	
-	
-	userInfo, err := HttpGet(userInfo_url, params)
-	if err != nil {
-		fmt.Println("请求异常:" + err.Error())
-	}
-	fmt.Println("获取部门成员（详情返回的结果是: ", userInfo)
-	fmt.Println("\n\n")
-
-
-	//获取部门成员
-	simplelist_url := "https://oapi.dingtalk.com/user/simplelist"
-	simplelist_params := make(map[string]interface{}, 0)
-	simplelist_params["access_token"] = access_token
-	simplelist_params["department_id"] = "1"
-	
-	
-	simplelist, err := HttpGet(simplelist_url, simplelist_params)
-	if err != nil {
-		fmt.Println("请求异常:" + err.Error())
-	}
-	fmt.Println("获取部门成员返回的结果是: ", simplelist)
-	fmt.Println("\n\n")
-
-
-
-	//发送钉钉消息
-	sendMsg_url := "https://oapi.dingtalk.com/message/send?access_token=" + access_token
-	args := make(map[string]interface{}, 0)
-	args["touser"] = "manager8500" //用户Id
-	args["toparty"] = "1"    //部门Id
-	args["agentid"] = "163934651" //微应用Id
-	args["msgtype"] = "text"    //发送的消息类型
-	content := make(map[string]interface{}, 0)
-	content["content"] = "啦啦啦 wetetetet"  //对应类型的消息内容
-	args["text"] = content
-	
-	sendResult, err := HttpPostJson(sendMsg_url, args)
-	if err != nil {
-		fmt.Println("请求异常:" + err.Error())
-	}
-	fmt.Println("发送钉钉消息返回的结果是: ", sendResult)
-}
-
-
-
