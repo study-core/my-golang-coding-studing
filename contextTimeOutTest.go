@@ -13,7 +13,7 @@ func main() {
 	fmt.Println("开始测试：", vm.abort)
 
 	var cancelFn context.CancelFunc
-	timeout := 0*time.Second
+	timeout := 2 * time.Millisecond
 	ctx := context.Background()
 
 	if timeout > 0 {
@@ -21,19 +21,22 @@ func main() {
 	} else {
 		ctx, cancelFn = context.WithCancel(ctx)
 	}
-
 	defer cancelFn()
-	go func() {
-		<- ctx.Done()
+
+	go func(ctx context.Context) {
+		<-ctx.Done()
 		vm.terminate()
 		fmt.Println("最后再次确认下vm.abort: ", vm.abort)
-	}()
+	}(ctx)
 
 	start := time.Now()
 	vm.doSomething()
 	fmt.Println("结果vm.abort:", vm.abort, "耗时:", time.Since(start))
-}
 
+	//flag := false
+	//
+	//printString(!flag)
+}
 
 type evm struct {
 	abort  bool
@@ -49,4 +52,9 @@ func (vm *evm) doSomething () {
 
 func (vm *evm) terminate () {
 	vm.abort = true
+}
+
+
+func printString(flag bool) {
+	fmt.Println("mark:", flag)
 }
