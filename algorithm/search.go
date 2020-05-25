@@ -65,12 +65,13 @@ func binarySearch2(sortedArray []int, lookingFor int) int {
 	return -1
 }
 
+// todo 推荐这种写法一
 func binarySearch3(arr []int, k int) int {
 	low := 0
 	high := len(arr) - 1
 	for low <= high {
 		// 这种写法防止两数和导致的内存溢出
-		mid := low + (high-low)>>1 // avg=(a+b)>>1://右移表示除2，左移表示乘2
+		mid := low + (high-low)>>1 // avg=(a+b)>>1   右移表示除2，左移表示乘2
 		if k < arr[mid] {
 			high = mid - 1
 		} else if k > arr[mid] {
@@ -82,6 +83,7 @@ func binarySearch3(arr []int, k int) int {
 	return -1
 }
 
+// todo 推荐这种写法 二, 这个最屌
 func binarySearch4(arr []int, k int) int {
 	low := 0
 	high := len(arr) - 1
@@ -115,9 +117,7 @@ func binarySearch4(arr []int, k int) int {
 func insertSearch(arr []int, key int) int {
 	low := 0
 	high := len(arr) - 1
-	time := 0
 	for low < high {
-		time += 1
 		// 计算mid值是插值算法的核心代码
 		mid := low + int((high-low)*(key-arr[low])/(arr[high]-arr[low]))
 		if key < arr[mid] {
@@ -201,7 +201,7 @@ func fibonacciSearch(arr []int, key int) int {
 生成 斐波那契数列
  */
 
-// 最屌写法
+// todo 最屌写法
 func fibonacci(n int) int {
 	if n < 2 {
 		return n
@@ -469,7 +469,7 @@ func insertValue(tree *RBTree, val, index int) {
 	node := &RBNode{Value: val, Index: index, Color: BLACK}
 	if nil == tree.Root {
 		tree.Root = node
-	}else{
+	} else {
 		tree.insert(node)
 	}
 }
@@ -575,7 +575,7 @@ func (t *RBTree) adjustRBTree(node *RBNode) {
 /**
 红黑树查找
  */
-func RedBlackTreeSearch(arr []int, key int) int{
+func RedBlackTreeSearch(arr []int, key int) int {
 	// 先构造树
 	tree := new(RBTree)
 	for i, v := range arr {
@@ -594,12 +594,13 @@ func serch(node *RBNode, key int) int {
 	}
 	if key < node.Value {
 		return serch(node.Left, key)
-	}else if key > node.Value {
+	} else if key > node.Value {
 		return serch(node.Right, key)
-	}else {
+	} else {
 		return node.Index
 	}
 }
+
 ////////////////////////////////////////////////////////////////////////////   B/B+树查找    ////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -665,58 +666,3 @@ func newBlockArr(arr, indexArr []int, blockPhrase [][]int) {
 	}
 }
 
-func newIndexArr(indexArr []int) {
-
-}
-
-////////////////////////////////////////////// topk (孤岛算法) ////////////////////////////////////////////
-//
-//func HeapSearchK (arr []int, topk int) {
-//
-//	// 初始化原始最小堆
-//	smallHeapArr := buildSmallHeap(arr, topk)
-//	for i := topk; i < len(arr); i ++ {
-//		// 如果当前原始比最小堆的根元素大，那么替换根，且重新调整最小堆
-//		if arr[i] > smallHeapArr[0] {
-//			swapRoot(smallHeapArr, arr[i])
-//		}
-//	}
-//	// 最大的K个数
-//	fmt.Println(smallHeapArr)
-//}
-//
-//
-//
-////建立小顶堆 
-//func buildSmallHeap(arr []int,topk int) []int{
-//	smallHeapArr := arr[:topk]
-// 	for i := topk/2 - 1; i >= 0; i-- {
-//		adjustSmallHeap(smallHeapArr, i, topk)
-//	}
-//	return smallHeapArr
-//}
-//// 调整最小堆
-//func adjustSmallHeap(arr []int, index, length int) {
-//	lchild := 2*index + 1
-//	rchild := 2 *index + 2
-//	parent := index
-//	// 左节点和根
-//	if lchild < length && arr[lchild] < arr[parent] {
-//		parent = lchild
-//	}
-//	// 右节点和根
-//	if rchild < length && arr[rchild] < arr[parent]{
-//		parent = rchild
-//	}
-//	// 互换位置
-//	if parent != index {
-//		arr[index], arr[parent] = arr[parent], arr[index]
-//	}
-//}
-//
-//// 替换根部，且重新构造最小堆
-//func swapRoot(arr []int, root int) {
-//	arr[0] = root // 新的根
-//	// 重新调整堆
-//	adjustSmallHeap(arr, 0, len(arr))
-//}
