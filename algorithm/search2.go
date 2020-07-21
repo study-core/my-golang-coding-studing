@@ -17,6 +17,8 @@ func main() {
 	 // 构造图
 	 fillGraph()
 
+	 /** 广度用 队列,  深度用 栈 */
+
 	 // 广度遍历
 	g.BFS(func(node *TNode) {
 		fmt.Printf("B-F-S visiting... %v\n", node)
