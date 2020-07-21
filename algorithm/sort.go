@@ -697,37 +697,51 @@ func heapSort3(arr []int) {
 	  		    7    8 9 10  11 12 13  14
 	 */
 	for i := len(arr)/2 - 1; i >= 0; i-- { // 先从 6 = 15/2 - 1 处开始构造最大化堆结构，然后依次从 5, 4, 3处构建最大化堆结构
-		heapAdjust3(arr, i, len(arr))
+		heapAdjust3(arr, i, len(arr))      // todo 绝不会有 元素下标 == len(arr)
 	}
 	// 经过上面的for初始化堆结构，则其实在 这个堆的二叉树上其实数字已经是有序的了
+	//
 	// 下面这个for是把最大的依次取出来，并重新调整堆结构
 	for i := len(arr) - 1; i > 0; i-- {
 		//将第一个和最后一个交换然后继续调整堆
-		arr[0], arr[i] = arr[i], arr[0] // 如 14 和 0 置换后(这时候14位置是个最大值，被取出来)
-		heapAdjust3(arr, 0, i)  // 把剩下的 0 -> n-2  的数由0位置(现在是14位置的值了)，再次往下和各个子节点的值对比
+		//
+		// 如 14 和 0 置换后 (这时候14位置是个最大值，被取出来)
+		arr[0], arr[i] = arr[i], arr[0]
+
+		// 把剩下的 0 -> n-2  的数由0位置 (现在是14位置的值了)， 再次往下和各个子节点的值对比
+		heapAdjust3(arr, 0, i)     // todo 绝不会有 元素下标 == i
 	}
 }
 
-func heapAdjust3 (arr []int, parent, len int) {
+func heapAdjust3 (arr []int, parent, end int) {
 	var i int
-	for 2 * parent + 1 < len { //确保是非叶子节点
+
+	// 从 parent 节点往下 调整~
+	for 2 * parent + 1 < end { // 确保是非叶子节点
 
 		lchild := 2 * parent + 1 // 左儿子的下标
 		rchild := lchild + 1	 // 右儿子的下标
+
+
+		// 先比较两个叶子节点, 取最大的叶子的下标
+
 		i = lchild
-
-
-		//取出两个叶子节点中最大的一个
-		if rchild < len && arr[rchild] > arr[lchild] {
+		if rchild < end && arr[rchild] > arr[lchild] {
 			i = rchild
 		}
 
-		//如果最大的叶子节点大于父节点则交换，否则推出循环
-		if arr[i] > arr[parent] { //这样纸就会把 最大的数依次上顶到根
+		// 如果最大的叶子节点 大于 父节点则交换，否则推出循环
+
+		//这样纸就会把 最大的数依次上顶到根
+		if arr[i] > arr[parent] {
+
 			arr[parent], arr[i] = arr[i], arr[parent]
+
 			parent = i // 然后设置该位置为新的父亲,因为该位置和根置换了，所以对该位子原先下属的各个子节点的值又需要重新比较了
 			// 就这样一路比下去
-			// 【其实这个只是针对上面除了6之外的非叶子节点才有用】
+			//
+			// todo 【其实这个只是针对上面除了6之外的非叶子节点才有用】
+			//
 			//同时注意，如果进到这里面来了，比方说：说明叶子节点上的最大的那个值已经和6位置的更换了，
 			// 然后当parant == 2 时 6又是2的其中一个非叶子节点
 			// 则，在进入这里时就是把之前6为根时的子节点上的最大值置换根后的值再次置换到2上面，
