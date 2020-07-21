@@ -110,7 +110,7 @@ todo  而 选择 只是逐个比较出最小的或者最大的， 在遍历过�
  */
 
 
-// todo 提取最小值
+// todo 提取最小值 （用 这种  好理解）
 func selectSort(arr []int) {
 	var minIndex int
 	for i := 0; i < len(arr) - 1; i++ { // 表示对数字做for遍历的次数
@@ -714,30 +714,31 @@ func heapSort3(arr []int) {
 }
 
 func heapAdjust3 (arr []int, parent, end int) {
-	var i int
+
+	// 记录最大的叶子结点的下标
+	var maxLeaf int
 
 	// 从 parent 节点往下 调整~
-	for 2 * parent + 1 < end { // 确保是非叶子节点
+	for 2 * parent + 1 < end { // 确保  parent 是非叶子节点
 
 		lchild := 2 * parent + 1 // 左儿子的下标
 		rchild := lchild + 1	 // 右儿子的下标
 
-
 		// 先比较两个叶子节点, 取最大的叶子的下标
 
-		i = lchild
+		maxLeaf = lchild
 		if rchild < end && arr[rchild] > arr[lchild] {
-			i = rchild
+			maxLeaf = rchild
 		}
 
 		// 如果最大的叶子节点 大于 父节点则交换，否则推出循环
 
 		//这样纸就会把 最大的数依次上顶到根
-		if arr[i] > arr[parent] {
+		if arr[maxLeaf] > arr[parent] {
 
-			arr[parent], arr[i] = arr[i], arr[parent]
+			arr[parent], arr[maxLeaf] = arr[maxLeaf], arr[parent]
 
-			parent = i // 然后设置该位置为新的父亲,因为该位置和根置换了，所以对该位子原先下属的各个子节点的值又需要重新比较了
+			parent = maxLeaf // 然后设置该位置为新的父亲,因为该位置和根置换了，所以对该位子原先下属的各个子节点的值又需要重新比较了
 			// 就这样一路比下去
 			//
 			// todo 【其实这个只是针对上面除了6之外的非叶子节点才有用】
