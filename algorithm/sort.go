@@ -19,6 +19,8 @@ func main() {
 	items := []int{1892000, 1935000, 1978000, 2021000, 2053250, 1838250, 1881250, 1924250, 1967250,
 		2010250, 1580250, 1623250, 1666250, 1709250, 1795250, 1569500, 1655500, 1698500, 1741500, 1784500,
 		1644750, 1752250, 1827500, 1988750, 2031750, 2074750}
+
+
 	heapSort3(items)
 	fmt.Println(items)
 	//fmt.Println(items[len(items) - 7:])
@@ -697,7 +699,7 @@ func heapSort3(arr []int) {
 	  		    7    8 9 10  11 12 13  14
 	 */
 	for i := len(arr)/2 - 1; i >= 0; i-- { // 先从 6 = 15/2 - 1 处开始构造最大化堆结构，然后依次从 5, 4, 3处构建最大化堆结构
-		heapAdjust3(arr, i, len(arr))      // todo 绝不会有 元素下标 == len(arr)
+		heapAdjust4(arr, i, len(arr))      // todo 绝不会有 元素下标 == len(arr)
 	}
 	// 经过上面的for初始化堆结构，则其实在 这个堆的二叉树上其实数字已经是有序的了
 	//
@@ -709,10 +711,12 @@ func heapSort3(arr []int) {
 		arr[0], arr[i] = arr[i], arr[0]
 
 		// 把剩下的 0 -> n-2  的数由0位置 (现在是14位置的值了)， 再次往下和各个子节点的值对比
-		heapAdjust3(arr, 0, i)     // todo 绝不会有 元素下标 == i
+		heapAdjust4(arr, 0, i)     // todo 绝不会有 元素下标 == i
 	}
 }
 
+/*
+// todo 看 heapAdjust4 的写法, 优雅简洁
 func heapAdjust3 (arr []int, parent, end int) {
 
 	// 记录最大的叶子结点的下标
@@ -753,10 +757,31 @@ func heapAdjust3 (arr []int, parent, end int) {
 	}
 }
 
+*/
 
+// todo 用这种写法, 最优雅
+func heapAdjust4 (arr []int, parent, end int) {
 
+	maxVal := parent
+	for  {
+		lchild := 2*parent + 1
+		rchild := 2 *parent + 2
+		if lchild < end && arr[lchild] > arr[maxVal] {
+			maxVal = lchild
+		}
 
-
+		if rchild < end && arr[rchild] > arr[maxVal]{
+			maxVal = rchild
+		}
+		// 互换位置 (parent 和 最大叶子互换)
+		if parent != maxVal {
+			arr[maxVal], arr[parent] = arr[parent], arr[maxVal]
+			parent = maxVal  // 下一个 子树的 root 由被替换的节点担当
+		}else {
+			break
+		}
+	}
+}
 
 
 //////////////////////////////////////////// topk (孤岛算法) ////////////////////////////////////////////
@@ -784,22 +809,22 @@ func buildSmallHeap(arr []int,topk int) []int{
 	return smallHeapArr
 }
 // 调整最小堆
-func adjustSmallHeap(arr []int, parent, length int) {
-	i := parent
+func adjustSmallHeap(arr []int, parent, end int) {
+	maxVal := parent
 	for  {
 		lchild := 2*parent + 1
 		rchild := 2 *parent + 2
-		if lchild < length && arr[lchild] < arr[i] {
-			i = lchild
+		if lchild < end && arr[lchild] < arr[maxVal] {
+			maxVal = lchild
 		}
-		// 右节点和根
-		if rchild < length && arr[rchild] < arr[i]{
-			i = rchild
+
+		if rchild < end && arr[rchild] < arr[maxVal]{
+			maxVal = rchild
 		}
-		// 互换位置
-		if parent != i {
-			arr[i], arr[parent] = arr[parent], arr[i]
-			parent = i
+		// 互换位置 (parent 和 最小叶子互换)
+		if parent != maxVal {
+			arr[maxVal], arr[parent] = arr[parent], arr[maxVal]
+			parent = maxVal
 		}else {
 			break
 		}
@@ -817,18 +842,3 @@ func swapRoot(arr []int, root int) {
 
 
 
-func quickSort(s []int) []int {
-	if len(s) < 2 {
-		return  s
-	}
-	v := s[0]
-	var left, right []int
-	for _, e := range s[1:] {
-		if e <= v {
-			left = append(left, e)
-		} else {
-			right = append(right, e)
-		}
-	}
-	return  append(append(quickSort(left), v), quickSort(right)...)
-}
