@@ -7,7 +7,8 @@ import (
 
 func main() {
 	a1 := []int{1, 2, 5, 7, 97, 15, 25, 30, 36, 39, 51, 91, 67, 78, 92, 80, 82, 85}
-	fmt.Println(BSTsearch(a1, 31))
+	fmt.Println(BSTsearch(a1, 25))
+	fmt.Println(binarySearch4(a1, 25))
 	// [0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597]
 	//arr := make([]int, 0)
 	//for i := 0; i < len(a1); i++ {
@@ -96,7 +97,7 @@ func binarySearch4(arr []int, k int) int {
 		或者
 		avg = (a&b)  + (a^b)/2;
 		 */
-		mid := low&high + (low^high)>>1
+		mid := (low&high) | (low^high)>>1
 		if k < arr[mid] {
 			high = mid - 1
 		} else if k > arr[mid] {
@@ -120,7 +121,7 @@ func insertSearch(arr []int, key int) int {
 	low := 0
 	high := len(arr) - 1
 	for low < high {
-		// 计算mid值是插值算法的核心代码
+		// 计算mid值是差值算法的核心代码
 		mid := low + int((high-low)*(key-arr[low])/(arr[high]-arr[low]))
 		if key < arr[mid] {
 			high = mid - 1
@@ -668,3 +669,6 @@ func newBlockArr(arr, indexArr []int, blockPhrase [][]int) {
 	}
 }
 
+
+
+////////////////////////////////////////////////////////////////////////////   Hash 查找    ////////////////////////////////////////////////////////////////////////////
