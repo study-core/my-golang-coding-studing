@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// https://zhuanlan.zhihu.com/p/93530380
 func main() {
 
 	findGraph(4)
