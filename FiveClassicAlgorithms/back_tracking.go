@@ -26,7 +26,7 @@ func findGraph(n int) { // n 为 n位王后在 n * n 的棋盘上的布局
 	board := make([][]string, n)
 
 	// 遍历 棋盘的 行
-	for board_row := 0; board_row < len(board); board_row++ {
+	for boardRow := 0; boardRow < len(board); boardRow++ {
 
 		rows := make([]string, n)
 		// 每一行，遍历每个空格，填充 "." 表示 棋盘上的空格子
@@ -35,7 +35,7 @@ func findGraph(n int) { // n 为 n位王后在 n * n 的棋盘上的布局
 		}
 
 		// 将 初始化完毕的 行 填充棋盘
-		board[board_row] = rows
+		board[boardRow] = rows
 	}
 
 	fmt.Println("初始化完棋盘后")
