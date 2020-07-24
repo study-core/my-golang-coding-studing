@@ -5,7 +5,7 @@ import "fmt"
 // https://zhuanlan.zhihu.com/p/93530380
 func main() {
 
-	findGraph(5)
+	findGraph(6)
 }
 
 // 回溯算法 (八 王后问题)
