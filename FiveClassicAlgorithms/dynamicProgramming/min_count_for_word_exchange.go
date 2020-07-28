@@ -7,6 +7,9 @@ func main() {
 	target := "ros"  // expect: 3
 	count := minCountForWordExchange(source, target)
 	fmt.Println(count)
+	count = minCountForWordExchangeOptimization(source, target)
+	fmt.Println(count)
+
 }
 
 
@@ -153,6 +156,61 @@ func minCountForWordExchange(source, target  string) int {
 
 
 // O(n*m) 空间复杂度优化成 O(n)
-func minCountForWordExchangeOptimization () {
+func minCountForWordExchangeOptimization (source, target string) int {
 
+	// todo  思路 类似 climb_grid.go 的 climbGridOptimization()
+	// todo 我们先根据原来的 二维状态方程,  dp[i][j] = minFn(dp[i - 1][j - 1], dp[i][j - 1], dp[i - 1][j]) + 1,  变换为 dp[n] 一维中的状态方程
+
+	// todo 怎么变? 一维 dp[i-1] 是 原来二维的  dp[i][j-1], 而 dp[i]<旧值>  是原来二维的 dp[i-1][j], 那么一维数组 装不下 原来二维的第三个值  dp[i-1][j-1] 了， 故我们需要一个临时变量  pre
+
+	// todo 得到新的状态方程 如下:
+	//  	dp[i] = min(dp[i-1], pre, dp[i]) + 1
+
+	m := len(source)
+	n := len(target)
+	dp := make([]int, n + 1)
+
+	// dp[0...n]的初始值, todo 即 原 二维的 第一行
+	for j := 0; j <= n; j++ {
+		dp[j] = j  // 看下原来 二维的就懂了
+	}
+
+	minFn := func(a, b, c int) int {
+		tmp := 0
+		if a < b {
+			tmp = a
+		}else {
+			tmp = b
+		}
+
+		if tmp < c {
+			return tmp
+		}
+		return c
+	}
+
+	// 状态方程: dp[j] = min(dp[j-1], pre, dp[j]) + 1
+	for i := 1; i <= m; i++  {
+		temp := dp[0]
+
+		// 相当于初始化
+		dp[0] = i
+		for j := 1; j <= n; j++ {
+
+			// todo pre 相当于之前的 dp[i-1][j-1]
+			pre := temp
+			temp = dp[j]
+
+			// 如果 word1[i] 与 word2[j] 相等, 第 i 个字符对应下标是 i-1
+			if source[i-1] == target[j-1] {
+				dp[j] = pre
+			}else {
+
+				// todo  启用 一维的状态方程
+				dp[j] = minFn(dp[j - 1], pre, dp[j]) + 1
+			}
+		// 保存要被抛弃的值
+		}
+	}
+	return dp[n]
 }

@@ -189,7 +189,8 @@ func climbGridOptimization(m, n int) int {
 
 
 	todo  由此 推出:  dp[i] = dp[i-1] + dp[i]
-			dp[i-1] 相当于之前二维时的 dp[i-1][j]，dp[i] 相当于之前二维时的 dp[i][j-1]
+			dp[i-1] 相当于之前二维时的 dp[i-1][j]，dp[i]<旧值> 相当于之前二维时的 dp[i][j-1] ???
+	todo 这个说反了吧 应该是  dp[i-1] 等于当前行的前一列, 即 原来二维的 dp[i][j-1], 而 dp[i]<旧值> 相当于 上一行的相同列, 即 原来二维的 dp[i-1][j]
 
 	todo 最后 dp[n-1] 就是我们要求的结果了
 	 */
