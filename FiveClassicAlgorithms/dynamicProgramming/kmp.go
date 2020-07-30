@@ -58,6 +58,10 @@ type kmp struct {
 }
 
 
+/**
+传统的 KMP 算法是使用一个一维数组 next 记录前缀信息，
+而本文是使用一个二维数组 dp 以状态转移的角度解决字符匹配问题，但是空间复杂度仍然是 O(256M) = O(M)
+ */
 func (self *kmp) initPattern(pat string) {
 
 
