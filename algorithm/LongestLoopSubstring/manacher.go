@@ -6,7 +6,7 @@ func main() {
 
 	str := "aaddxfbdfadadasfhhhhhwewewhhhhaasfas"
 	res := manacher(str)
-	fmt.Println(res)
+	fmt.Println(res)  // hhhhwewewhhhh
 }
 
 // todo 马拉车算法
@@ -71,63 +71,69 @@ func  manacher(s string)  string {
 	}
 
 	// todo 第一步：预处理，将原字符串转换为新字符串
-	tmpStr := "^"
+	newStr := "^"
 	for  i := 0; i < len(str); i++ {
-		tmpStr += "#" + string(str[i])
+		newStr += "#" + string(str[i])
 	}
 	// 尾部再加上字符$，变为奇数长度字符串
-	tmpStr += "#$"
+	newStr += "#$"
 
-	fmt.Println("添加特殊字符处理之后的 str:", tmpStr)
-
-	tmpRune := []rune(tmpStr)
+	newRune := []rune(newStr)
 
 	// todo 第二步：计算数组p、起始索引、最长回文半径
-	n := len(tmpRune)
+	n := len(newRune)
+
+	fmt.Println("添加特殊字符处理之后的 str:", newStr, "rune len:", n, "str len:", len(newStr))
 
 	// p数组
 	p := make([]int, n)
 
-	var id, mx int
+	var id, mx int   // todo 重要的两个值
 
-	// todo 最长回文子串的长度
+	// todo 最长回文子串的长度  <初始值为: -1>
 	maxLength := -1
 
 	// todo 最长回文子串的中心位置索引
 	index := 0
 
-	maxFn := func(a, b int) int {
+	minFn := func(a, b int) int {
 		if a < b {
-			return b
+			return a
 		}
-		return a
+		return b
 	}
 
-	for j :=1; j < n-1; j++ {
+
+	for i :=1; i < n - 1; i++ {
 
 		// todo 参看前文第五部分  {很重要}
-		if mx > j {
-			p[j] = maxFn(p[2*id-j], mx-j)
+		if i < mx {
+			p[i] = minFn(p[2*id-i], mx-i) // 需搞清楚上面那张图含义, mx 和 2*id-i 的含义
 		} else {
-			p[j] = 1
+			p[i] = 1
 		}
 
 		// 向左右两边延伸，扩展右边界
-		for tmpRune[j+p[j]] == tmpRune[j-p[j]] {
-			p[j]++
+		fmt.Println("i = ", i, "p[i] = ", p[i], "i+p[i] = ", i+p[i], "i-p[i] = ", i-p[i])
+		for newRune[i+p[i]] == newRune[i-p[i]] { // 不需边界判断，因为左有'^',右有'$'
+			p[i]++
 		}
 
 		// 如果回文子串的右边界超过了mx，则需要更新mx和id的值
-		if mx < p[j] + j {
-			mx = p[j] + j
-			id = j
+		//
+		// 我们每走一步 i，都要和 mx 比较，我们希望 mx 尽可能的远，这样才能更有机会执行 if (i < mx)这句代码，从而提高效率
+		if mx < p[i] +i {
+			mx = p[i] + i
+			id = i
 		}
 
-		// 如果回文子串的长度大于maxLength，则更新maxLength和index的值
-		if maxLength < p[j] - 1 {
+
+
+		// 如果回文子串的长度大于maxLength
+		if maxLength < p[i] - 1 {
 			// 参看前文第三部分
-			maxLength = p[j] - 1
-			index = j
+			maxLength = p[i] - 1
+			index = i
 		}
 	}
 	// 第三步：截取字符串，输出结果

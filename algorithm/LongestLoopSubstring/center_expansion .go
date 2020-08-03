@@ -5,7 +5,8 @@ import "fmt"
 func main() {
 	str := "aaddxfbdfadadasfhhhhhwewewhhhhaasfas"
 	res := longestPalindrome(str)
-	fmt.Println(res)
+	fmt.Println(res) // hhhhwewewhhhh
+
 }
 
 
