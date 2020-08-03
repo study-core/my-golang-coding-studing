@@ -61,6 +61,10 @@ func main() {
 //  由此我们可以得出回文子串右边界和其半径之间的关系：mx = p[id]+id
 
 
+
+
+// 时间复杂度: O(N)
+// 空间复杂度: O(N)
 func  manacher(s string)  string {
 
 
