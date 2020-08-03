@@ -127,9 +127,7 @@ func  manacher(s string)  string {
 			id = i
 		}
 
-
-
-		// 如果回文子串的长度大于maxLength
+		// 如果回文子串的长度大于maxLength，则更新maxLength和index的值
 		if maxLength < p[i] - 1 {
 			// 参看前文第三部分
 			maxLength = p[i] - 1
