@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+// https://www.jianshu.com/p/392172762e55
+// https://segmentfault.com/a/1190000008484167
 func main() {
 
 	str := "aaddxfbdfadadasfhhhhhwewewhhhhaasfas"
@@ -50,7 +52,7 @@ func main() {
 // todo  最长回文子串的起始索引：
 // 		int index = (i - p[i])/2       j<原数组下标> = (i<处理之后的数组下标> - p[i])/2      j = (7- p[7])/2 = (7-5)/2 == 1
 //
-//  【字符 加上 ^ 和 $ 首尾, 主要是解决 奇数串惊添加#后的串求 `最长回文子串的起始索引` 时的  `i - p[i]` 会得到 负数而添加的首尾特殊字符】
+//  【字符 加上 ^ 和 $ 首尾, 主要是解决 奇数串 经添加 # 后的串求 `最长回文子串的起始索引` 时的  `i - p[i]` 会得到 负数而添加的首尾特殊字符】
 //
 // todo  初始化  var p []int
 //
@@ -65,7 +67,13 @@ func main() {
 //		当i等于7时, id等于7, p[id] = 5, 在以位置7为中心的回文子串中, 该回文子串的右边界是位置12       f的位置.
 //		当i等于12时, id等于12, p[id] = 2, 在以位置12为中心的回文子串中, 该回文子串的右边界是位置14    $的位置.
 //
-//  由此我们可以得出回文子串右边界和其半径之间的关系：mx = p[id]+id
+//  由此我们可以得出 `回文子串右边界` mx 和 `其半径` p[id] 之间的关系：todo  `mx = p[id]+id`    => p[i] = mx -i
+//
+//  当  mx > i 时：
+//
+//  设 j 为 i 关于 id 对称的另外一点. todo 我们有  p[j] = p[i] <因为 两者的 子串相等啊>
+//
+//  且 下标值  `i+j=2*id`, 有  j = 2*id -i 所以  p[2*id -i] = p[i] = mx -i
 
 
 
@@ -119,13 +127,15 @@ func  manacher(s string)  string {
 
 		// todo 参看前文第五部分  {很重要}
 		if i < mx {
-			p[i] = minFn(p[2*id-i], mx-i) // 需搞清楚上面那张图含义, mx 和 2*id-i 的含义
+			p[i] = minFn(p[2*id-i], mx-i) // 需搞清楚上面那张图含义, mx 和 2*id-i 的含义  // 防止超出 mx
 		} else {
 			p[i] = 1
 		}
 
 		// 向左右两边延伸，扩展右边界
 		fmt.Println("i = ", i, "p[i] = ", p[i], "i+p[i] = ", i+p[i], "i-p[i] = ", i-p[i])
+
+		// 碰到之前讲的[三种情况  看连接中的三种情况]时候，需要利用中心扩展法
 		for newRune[i+p[i]] == newRune[i-p[i]] { // 不需边界判断，因为左有'^',右有'$'
 			p[i]++
 		}
@@ -147,6 +157,6 @@ func  manacher(s string)  string {
 	}
 	// 第三步：截取字符串，输出结果
 	// 起始索引的计算参看前文第四部分
-	start := (index-maxLength)/2
+	start := (index-maxLength)/2   // todo  公式:   index = (i - p[i])/2
 	return string(str[start: start + maxLength])
 }
