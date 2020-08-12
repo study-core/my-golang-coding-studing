@@ -5,8 +5,9 @@ import "fmt"
 // https://www.cnblogs.com/yjiyjige/p/3263858.html#commentform
 func main() {
 
-	pat := "abbca"
-	txt := "adfasfsfsaacvdfgsdeeabbcarergsdvdfabbcabbca"
+	//pat := "abbca"
+	pat := "abcadabcabd"
+	txt := "adfasfsfsaacvdfgsdeeabbabcabcabdabcabdcarergsdvdfabbcabbca"
 
 	index := KMP(txt, pat)
 	fmt.Println(index) // 20
@@ -80,22 +81,33 @@ func getNext(pat string) []int {
 	k := -1 // 表示 已经是 pat的最起始位置了, 我们需要将 txt的坐标往后移, 从动作上感觉是 pat的窗口顺着 txt的轨道往后移一格
 
 	// todo  构造 pat 的 next 数组
+	//
+	// todo 下面的循环 我们比喻为,  k  和 j 作为边界的 移动窗口，一直向后滑，并且会根据实际情况 调整  k 和 j 的坐标  由此推出各个 pat中的 字符需要跳转的位置
+	//
+	// todo 需要画图 演算才能明白怎么回事 ##############
 	for j < plen-1 {
 		if k == -1 || p[j] == p[k] {
 			j++
 			k++
 			if p[j] == p[k] { // 当两个字符相等时要跳过
 				next[j] = next[k]
-
+				fmt.Println("j :=", j, "k :=", k, "进入 a, next[k] :=", next[k])
 			} else {
 				next[j] = k
+				fmt.Println("j :=", j, "k :=", k, "进入 b")
 			}
-
 		} else { // 当 P[k] != P[j]
-			// todo 这个操作 没看懂耶
-			k = next[k]
+			k = next[k] // todo 这个操作 是在 调整 k
+			fmt.Println("j :=", j, "k :=", k, "进入 c")
 		}
 	}
+	/**
+	由于KMP算法中指针i是不减的，因此j的指向位置只与模式串本身的结构有关。j的滑动位置的信息存放在next数组中。当匹配失败，就可以通过查询next数组的值得到下一次j滑动的位置。
+
+	next数组存放的是模式串的移位信息，具体就是模式串的部分匹配值，next数组大小与模式串T等长
+
+	 */
+	 fmt.Println("next := ", next)
 	return next
 }
 
