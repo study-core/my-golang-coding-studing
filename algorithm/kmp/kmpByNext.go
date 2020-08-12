@@ -136,10 +136,10 @@ func KMP(txt, pat string) int {
 		}
 	}
 
+	// 终于 出现了 pat 字符 匹配完了， 这时候返回 txt中匹配pat的子串的第一个字符
 	if j == len(p) {
 		return i - j
-	} else {
+	} else { // 否则 返回 -1 表示找不到
 		return -1
-
 	}
 }
