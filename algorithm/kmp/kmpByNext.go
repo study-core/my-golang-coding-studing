@@ -3,6 +3,8 @@ package main
 import "fmt"
 
 // https://www.cnblogs.com/yjiyjige/p/3263858.html#commentform
+// https://www.jianshu.com/p/ffbf1e8962b0
+// todo 还需要自己画图理解  getNext 中的 for
 func main() {
 
 	//pat := "abbca"
