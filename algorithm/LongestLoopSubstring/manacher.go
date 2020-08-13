@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 // https://www.jianshu.com/p/392172762e55
-// https://segmentfault.com/a/1190000008484167
+// https://segmentfault.com/a/1190000008484167   这个直接看算法复杂度分析
 func main() {
 
 	str := "aaddxfbdfadadasfhhhhhwewewhhhhaasfas"
