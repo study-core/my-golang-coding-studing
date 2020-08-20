@@ -53,7 +53,7 @@ func main() {
 	source := "我爱a$_!!我ddd"
 	co := ""
 	for _, c := range source {
-		co = fmt.Sprintf("%s%b", co, c)
+		co = fmt.Sprintf("%s%b", co, c) // 拼接 二进制字符串表示
 	}
 	encodeStr := huffmanEncode(codingTable, source)
 	target := huffmanDecode(tree, encodeStr)
