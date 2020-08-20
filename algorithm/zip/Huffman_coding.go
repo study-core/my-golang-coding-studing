@@ -51,10 +51,13 @@ func main() {
 	}
 
 	source := "我爱a$_!!我ddd"
-
+	co := ""
+	for _, c := range source {
+		co = fmt.Sprintf("%s%b", co, c)
+	}
 	encodeStr := huffmanEncode(codingTable, source)
 	target := huffmanDecode(tree, encodeStr)
-	fmt.Println("调试, 源字符串:", source, ", 编码值:", encodeStr, ", 解码回来:", target)
+	fmt.Println("调试, 源字符串:", source, ", 编码值:", encodeStr, ", 不编码的值:", co,  ", 解码回来:", target)
 }
 
 /**
@@ -186,7 +189,15 @@ func NewHuffmanExpansionNode(priority int, left, right *HuffmanNode) *HuffmanNod
 
 // 降序
 func (self huffmanNodeQueue) Less(i, j int) bool {
-	return self[i].priority > self[j].priority
+
+	if self[i].priority > self[j].priority {
+		return true
+	} else if self[i].priority < self[j].priority {
+		return false
+	} else {
+		// priority 相等时, 使用 char 的字典 降序
+		return self[i].char > self[j].char
+	}
 }
 func (self huffmanNodeQueue) Len() int {
 	return len(self)
@@ -256,7 +267,10 @@ func (self *HuffmanTree) getWPL() int {
 }
 
 func  find (node *HuffmanNode, currIndex int, codeArr []rune) (int, string) {
-	if currIndex == len(codeArr) -1 {
+	// todo 注意, 这里不能用 currIndex == len(codeArr) - 1,
+	// 		因为 刚一进来时的 currIndex 起始是上一步的 next, 而 node 确实当前 node
+	// 		说白了, 就是当前 node 和 currIndex -1 才是 最后一个 encode 的 0 或 1 的值
+	if currIndex == len(codeArr) {
 		return -1, string(node.char)
 	}
 	next := currIndex + 1
@@ -267,7 +281,11 @@ func  find (node *HuffmanNode, currIndex int, codeArr []rune) (int, string) {
 	if string(codeArr[currIndex]) == "1" && nil != node.right {  // 往右转
 		return find (node.right, next, codeArr)
 	}
-	return next, string(node.char)
+
+	// 这里为什么 返回 currIndex 而不是 next, 因为使用当前 codeArr[currIndex]) 发现遍历到的节点和当前node 既没有左右节点，
+	// 故在  charArr 中的 currIndex 应该为下一个 rune 的起始索引,
+	// 如果使用 next, 就会出现 索引跳过, 导致编码不正确
+	return currIndex, string(node.char)
 }
 
 // 构建 编码字典表, 这里使用 由上到下, 由root到leaf获取 编码值
