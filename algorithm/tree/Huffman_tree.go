@@ -5,6 +5,8 @@ import (
 	"sort"
 )
 
+// https://since1991hy.github.io/blog/2016/08/27/huffman-tree/   【超级详细的 编解码, 包括接收方是怎么做解码的依据都说了】
+
 // todo 哈夫曼树
 func main() {
 	//arr := []int{7, 5, 2, 4}  // WPL: 35
