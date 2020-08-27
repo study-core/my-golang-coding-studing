@@ -247,6 +247,9 @@ func testMerge() {
 		h3 = h3.next
 	}
 	fmt.Println("根表3: ", strings.Join(arr3, ","))
+
+	heap := &BinomialHeap{root: root}
+	heap.print()
 }
 
 // 递归查找  todo 现在第一颗树查找, 然后在下一颗树查找
@@ -317,6 +320,10 @@ func remove(root *BinomialNode, key int) *BinomialNode {
 	return root
 }
 
+// 因为在移除 某棵树的 root 时, 这可原来的树的剩余节点就变成了一个 root链表 的二项式堆
+// todo 参数中的 root 是这个 生成的 二项式堆的 root
+// 我们可以知道这时候这个 堆中的 N颗树 的degree 是由大到小, 从左到右排序的
+// 我们需要做 左右反转动作, 将degree 小的树放到最左边, degree 大的放到最右边
 func reverse(root *BinomialNode) *BinomialNode {
 
 	var next, tail *BinomialNode
@@ -352,12 +359,12 @@ func decreaseKey(node *BinomialNode, newKey int) {
 
 	node.key = newKey
 
-	var child, parent *BinomialNode
+	var parent, child *BinomialNode
 
-	child = node
 	parent = node.parent
+	child = node
 
-	// 保证最小的 节点一直往上提到 root
+	// 保证最小的 节点一直往上提到 root todo 沿着一条线 往上提 ??
 	for nil != parent && child.key < parent.key {
 		// 交换parent和child的数据
 		tmp := parent.key
@@ -371,6 +378,7 @@ func decreaseKey(node *BinomialNode, newKey int) {
 
 // key 由小变大
 func increaseKey(node *BinomialNode, newKey int) {
+
 	node.key = newKey
 
 	var curr, child *BinomialNode
@@ -381,26 +389,34 @@ func increaseKey(node *BinomialNode, newKey int) {
 
 	// 但是 node 有多个 child 啊, 需要一一比较啊, 因为需要知道往哪个 child 的路径下沉node
 	for nil != child {
+
+		// todo 优先和自己的子节点作比较
 		if curr.key > child.key {
 			// 如果"当前节点" < "它的左孩子"，
 			// 则在"它的孩子中(左孩子 和 左孩子的兄弟)"中，找出最小的节点；
 			// 然后将"最小节点的值" 和 "当前节点的值"进行互换
 			least := child // todo least是child和它的兄弟中的最小节点
+
+			// 使用子节点和它的兄弟逐个作比较
 			for nil != child.next {
+
+				// 如果 子节点大于它的兄弟节点
 				if least.key > child.next.key {
-					least = child.next
+					least = child.next // 记录最小值有子节点的兄弟节点
 				}
+
+				// 否则继续比较子节点的  下一个兄弟节点
 				child = child.next
 			}
-			// 交换最小节点和当前节点的值
-			tmp := least.key
-			least.key = curr.key
-			curr.key = tmp
+			// todo 交换最小节点和当前节点的值
+			least.key, curr.key = curr.key, least.key
 
 			// 交换数据之后，再对"原最小节点"进行调整，使它满足最小堆的性质：父节点 <= 子节点
 			curr = least
 			child = curr.child
 		} else {
+
+			// 否则, 直接看 子节点的兄弟节点
 			child = child.next
 		}
 	}
@@ -465,6 +481,89 @@ func (self *BinomialHeap) update(oldKey, newKey int) {
 	node := search(self.root, oldKey)
 	if nil != node {
 		updateKey(node, newKey)
+	}
+}
+
+// todo 【找堆中最小key】
+func (self *BinomialHeap) minimum() *BinomialNode {
+	if nil == self.root {
+		return nil
+	}
+
+	// prev, curr 用来做双指针移动用,  min 用来记录实时的 最小值用
+	var prev, curr, min *BinomialNode
+	prev = self.root
+	curr = prev.next
+	min = self.root
+	// 找到最小节点
+	for nil != curr {
+		if curr.key < min.key {
+			min = curr
+		}
+		prev = curr
+		curr = curr.next
+	}
+	return min
+}
+
+// todo 【移除堆中最小key】
+func (self *BinomialHeap) extractMinimum() {
+
+	if nil == self.root {
+		return
+	}
+
+	var prev, curr, preMin, min *BinomialNode
+	prev = self.root
+	curr = prev.next
+	min = self.root
+	// 找到最小节点
+	for nil != curr {
+		if curr.key < min.key {
+			min = curr
+			preMin = prev
+		}
+		prev = curr
+		curr = curr.next
+	}
+
+	// 特殊处理下
+	if nil == preMin { // root的根节点就是最小根节点
+		self.root = self.root.next
+	} else { // root的根节点不是最小根节点
+		preMin.next = min.next // 因为 移除了 min, 所以原来 min上面的 next 接到 preMin上
+	}
+
+	// 反转最小节点的左孩子，得到最小堆child.  todo 因为 在min所在的 树中, 当 min 被移除之后得到的 二项式堆的 root 就是原来树的 child
+	// 这样，就使得最小节点所在二项树的孩子们都脱离出来成为一棵独立的二项树(不包括最小节点)
+	child := reverse(min.child)
+	// 将"删除最小节点的二项堆child"和"root"进行合并  todo 两个堆 合并
+	self.root = union(self.root, child)
+}
+
+// todo 【打印二项式堆】
+func (self *BinomialHeap) print() {
+
+	if nil == self.root {
+		fmt.Println("heap: {}")
+		return
+	}
+
+	p := self.root
+	fmt.Printf("heap degree: {")
+	for nil != p {
+		fmt.Printf("B%d ", p.degree)
+		p = p.next
+	}
+	fmt.Printf("}\n")
+
+	var i int
+	p = self.root
+	for nil != p {
+		i++
+		fmt.Printf("%d. Binomial Tree B%d: \n", i, p.degree)
+		fmt.Printf("\tkey:%2d{degree:%d} is root\n", p.key, p.degree)
+		p = p.next
 	}
 }
 
