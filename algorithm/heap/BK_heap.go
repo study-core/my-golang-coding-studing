@@ -55,7 +55,7 @@ todo 包含n个节点的二项堆，表示成若干个2的指数和(或者转换
 type BinomialNode struct {
 	key    int           // 关键字(键值)
 	degree int           // 度数
-	child  *BinomialNode // 左孩子  todo 但是有多个 child 啊, 怎么整？
+	child  *BinomialNode // 左孩子  todo 但是有多个 child 啊, 怎么整？ 那都是 记为 child 的 兄弟
 	parent *BinomialNode // 父节点
 	next   *BinomialNode // 兄弟
 }
