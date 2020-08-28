@@ -197,7 +197,7 @@ func insert(root, newNode *SplayNode) *SplayNode {
 
 func remove(root *SplayNode, key int) *SplayNode {
 
-	var x *SplayNode
+	var newRoot *SplayNode
 
 	if nil == root {
 		return nil
@@ -212,15 +212,20 @@ func remove(root *SplayNode, key int) *SplayNode {
 	// 将key对应的节点旋转为根节点。
 	root = Top2ButtonSplay(root, key)
 
+	// todo 这一步就是将 splay完之后的目标节点移除掉, 使用它的 前序节点作为新的 root
 	if nil != root.left {
 		// 将"tree的前驱节点"旋转为根节点
-		x = Top2ButtonSplay(root.left, key)
-		// 移除tree节点
-		x.right = root.right
+		newRoot = Top2ButtonSplay(root.left, key)
+		// todo 移除掉 目标节点
+		newRoot.right = root.right
 	} else {
-		x = root.right
+
+		// 不存在前驱节点, 则使用它的 right 节点作为新的 root
+		newRoot = root.right
 	}
-	return x
+
+	// 返回新的 root
+	return newRoot
 }
 
 // 最小的值都在 left 子树
@@ -317,7 +322,10 @@ func (self *SplayTree) insert(key int) {
 }
 
 // todo 删除操作
-//    ----------------------------- 这个 不对吧?
+//
+//    它会先在伸展树中查找键值为key的节点。若没有找到的话，则直接返回。
+//    若找到的话，则将该节点旋转为根节点，然后再删除该节点，之后将它的【前驱节点】作为根节点；
+//   如果它的前驱节点不存在，则根为它的右孩子。
 func (self *SplayTree) remove(key int) {
 	self.root = remove(self.root, key)
 }
