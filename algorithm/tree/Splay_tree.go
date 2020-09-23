@@ -36,7 +36,6 @@ type SplayNode struct {
 // 		有 `Z 字旋转`: 先左旋, 再右旋 || 先右旋, 再左旋	(zig-zag)
 // 		有 `一 字旋转`: 先左旋, 再左旋 || 先右旋, 再右旋   (zig-zig)
 
-
 // todo 【自底向上】需要利用旋转, 而【自顶向上】则除了旋转之外, 还需要进行连接操作.
 
 // todo 自顶向下  和  自底向上 的区别：
@@ -111,9 +110,9 @@ func Top2ButtonSplay(root *SplayNode, key int) *SplayNode {
 			// 在将 之前 key 的parent 和 grandpa 做了 右旋 之后, 从 新的 root 处做分裂,
 			// 将分裂完的 左边部分作为 继续for (因为 目标 key 留在左边部分),
 			// 将分裂完的 右边部分作为 之前 r 树的 左子树连接过去
-			r.left = root /* link to right content tree */
-			r = root           // 将 r树 下一次 link 时作为 link子树的 root的指针位移到新的连接点 (此时的 r树没有 做旋转哦, 只是位移了下指针哦)
-			root = root.left   // root 为分裂后剩下的左部分 (包含 目标key 部分), 也是下次 for 中 key 作比较的 新指针起点
+			r.left = root    /* link to right content tree */
+			r = root         // 将 r树 下一次 link 时作为 link子树的 root的指针位移到新的连接点 (此时的 r树没有 做旋转哦, 只是位移了下指针哦)
+			root = root.left // root 为分裂后剩下的左部分 (包含 目标key 部分), 也是下次 for 中 key 作比较的 新指针起点
 
 		} else if key > root.key {
 
@@ -162,9 +161,7 @@ func Top2ButtonSplay(root *SplayNode, key int) *SplayNode {
 	return root
 }
 
-
-
-func insertSplayNode (root, newNode *SplayNode) *SplayNode {
+func insertSplayNode(root, newNode *SplayNode) *SplayNode {
 
 	var x, y *SplayNode
 	x = root
@@ -195,7 +192,7 @@ func insertSplayNode (root, newNode *SplayNode) *SplayNode {
 	return root
 }
 
-func removeSplayNode (root *SplayNode, key int) *SplayNode {
+func removeSplayNode(root *SplayNode, key int) *SplayNode {
 
 	var newRoot *SplayNode
 
@@ -252,10 +249,7 @@ func maximumSplayNode(root *SplayNode) *SplayNode {
 	return root
 }
 
-
-
 // ---------------------------------------------------------------------------------------------
-
 
 // 从 某个节点作为起始, 开始查找 key所在的  node
 //
@@ -287,7 +281,6 @@ type SplayTree struct {
 	否则, key的前驱在从根节点到key的路径上, 在这个路径上寻找到比key小的最大值, 即为key的前驱.
  */
 
-
 // // todo 【有顶向下的思想】 如果目标节点在右孩子中, 则将右子树保留在M中, 其余部分与之前的L树融合;
 // 		    如果目标节点在左孩子中, 则将左子树保留在M中, 其余部分与之前的R树融合.
 //		    一直循环直到找到节点, 然后将目标节点的左子树与L树融合, 右子树与R树融合.
@@ -309,8 +302,6 @@ func (self *SplayTree) Top2ButtonSplay(key int) {
 	self.root = Top2ButtonSplay(self.root, key)
 }
 
-
-
 // todo 插入操作
 //
 // 先按照 二叉树插入, 再将 key 旋转到 root 位置
@@ -323,15 +314,16 @@ func (self *SplayTree) insert(key int) {
 
 // todo 删除操作
 //
+//	TODO 注意了, 一个十分重要的  处理
 //    它会先在伸展树中查找键值为key的节点。若没有找到的话，则直接返回。
-//    若找到的话，则将该节点旋转为根节点，然后再删除该节点，之后将它的【前驱节点】作为根节点；
-//   如果它的前驱节点不存在，则根为它的右孩子。
+//    todo 若找到的话，则将该节点旋转为根节点，然后再删除该节点，之后将它的【前驱节点】作为根节点；
+//    todo 如果它的前驱节点不存在，则根为它的右孩子。
 func (self *SplayTree) remove(key int) {
 	self.root = removeSplayNode(self.root, key)
 }
 
 // todo  找最小值
-func (self *SplayTree) minimum () *SplayNode {
+func (self *SplayTree) minimum() *SplayNode {
 	if node := minimumSplayNode(self.root); nil != node {
 		return node
 	}
@@ -339,28 +331,25 @@ func (self *SplayTree) minimum () *SplayNode {
 }
 
 // todo  找最大值
-func (self *SplayTree) maximum () *SplayNode {
+func (self *SplayTree) maximum() *SplayNode {
 	if node := maximumSplayNode(self.root); nil != node {
 		return node
 	}
 	return nil
 }
 
-
 func (self *SplayTree) print() {
 
 }
-
-
 
 // -----------------------------------------------
 
 // 由底向上
 type SplayNode2 struct {
-	key int
+	key    int
 	parent *SplayNode2 // todo 使用 自底向上 才需要存 parent 引用
-	left  *SplayNode2
-	right *SplayNode2
+	left   *SplayNode2
+	right  *SplayNode2
 }
 
 // 递归实现
@@ -375,12 +364,12 @@ func Button2TopSplay1(root *SplayNode2, key int) *SplayNode2 {
 
 		// 右旋
 		tmp := root
-		root = root.left  // 旧 root 旧左子 是新 root
+		root = root.left      // 旧 root 旧左子 是新 root
 		tmp.left = root.right // 旧 root 新左子 是新root 旧右子
-		root.right = tmp // 新 root 新右子 是旧 root
+		root.right = tmp      // 新 root 新右子 是旧 root
 
-	}else if key > root.key {
-		root.right=Button2TopSplay1(root.right, key)
+	} else if key > root.key {
+		root.right = Button2TopSplay1(root.right, key)
 
 		// 左旋
 		tmp := root
@@ -414,17 +403,17 @@ func Button2TopSplay2(root *SplayNode2, key int) *SplayNode2 {
 			if nil != curr.left {
 				parentStack.Push(curr)
 				curr = curr.left
-			}else{
+			} else {
 				return root
 			}
-		}else if key > curr.key {
+		} else if key > curr.key {
 			if nil != curr.right {
 				parentStack.Push(curr)
 				curr = curr.right
-			}else{
+			} else {
 				return root
 			}
-		}else{
+		} else {
 			break
 		}
 	}
@@ -432,9 +421,9 @@ func Button2TopSplay2(root *SplayNode2, key int) *SplayNode2 {
 	rotateRight := func(root *SplayNode2) *SplayNode2 {
 		// 右旋
 		tmp := root
-		root = root.left  // 旧 root 旧左子 是新 root
+		root = root.left      // 旧 root 旧左子 是新 root
 		tmp.left = root.right // 旧 root 新左子 是新root 旧右子
-		root.right = tmp // 新 root 新右子 是旧 root
+		root.right = tmp      // 新 root 新右子 是旧 root
 		return root
 	}
 
@@ -455,14 +444,14 @@ func Button2TopSplay2(root *SplayNode2, key int) *SplayNode2 {
 		parent = parentStack.Pop()
 		if parentStack.IsEmpty() {
 			grandpa = nil
-		}else{
+		} else {
 			grandpa = parentStack.Peek()
 		}
 
 		// 如果要查找的 node是当前parent 的左节点
 		if parent.left == curr {
 			// 需要 右旋
-			if nil != grandpa {   // todo  zig-zag
+			if nil != grandpa { // todo  zig-zag
 				if parent == grandpa.left {
 
 					// 右旋
@@ -473,28 +462,28 @@ func Button2TopSplay2(root *SplayNode2, key int) *SplayNode2 {
 					grandpa.left = parent
 
 					//grandParentNode.left=rotateRight(parentNode);
-				}else{
+				} else {
 					parent = rotateRight(parent)
-					grandpa.right=parent
+					grandpa.right = parent
 					//grandParentNode.right=rotateRight(parentNode);
 				}
-			}else{  // 单次 zig
+			} else { // 单次 zig
 
 				// 如果 没有 grandpa, 则只需要旋转一次即可
 				parent = rotateRight(parent)
 			}
-		}else{
+		} else {
 
 			// 左旋
-			if nil !=grandpa {
+			if nil != grandpa {
 				if parent == grandpa.left {
 					parent = rotateLeft(parent)
-					grandpa.left=parent
-				}else{
+					grandpa.left = parent
+				} else {
 					parent = rotateLeft(parent)
-					grandpa.right=parent
+					grandpa.right = parent
 				}
-			}else{
+			} else {
 				parent = rotateLeft(parent)
 			}
 		}
@@ -509,7 +498,6 @@ func Button2TopSplay2(root *SplayNode2, key int) *SplayNode2 {
 	return root
 }
 
-
 type SplayTree2 struct {
 	root *SplayNode2
 }
@@ -519,15 +507,14 @@ type SplayTree2 struct {
 //		不过需要注意的是旋转过程必须是自底向上的, 反过来则不行.
 func (self *SplayTree2) Button2TopSplay(key int) {
 	//self.root = Button2TopSplay1(self.root, key)  // 递归实现
-	self.root = Button2TopSplay2(self.root, key)	// 非递归
+	self.root = Button2TopSplay2(self.root, key) // 非递归
 }
-
 
 // --------------
 
 type splayNodeStack struct {
 	capacity, size, curr int
-	arr []*SplayNode2
+	arr                  []*SplayNode2
 }
 
 func NewSplayNodeStack(capacity int) *splayNodeStack {
@@ -535,7 +522,7 @@ func NewSplayNodeStack(capacity int) *splayNodeStack {
 		capacity: capacity,
 		size:     0,
 		curr:     -1,
-		arr: make([]*SplayNode2, 0),
+		arr:      make([]*SplayNode2, 0),
 	}
 }
 func (self *splayNodeStack) IsEmpty() bool {
@@ -564,8 +551,8 @@ func (self *splayNodeStack) Pop() *SplayNode2 {
 	if self.size == 0 {
 		return nil
 	}
-	node := self.arr[len(self.arr) - 1]
-	self.arr = self.arr[:len(self.arr) - 1]
+	node := self.arr[len(self.arr)-1]
+	self.arr = self.arr[:len(self.arr)-1]
 	self.curr = len(self.arr) - 1
 	self.size --
 	return node
