@@ -96,7 +96,7 @@ func Top2ButtonSplay(root *SplayNode, key int) *SplayNode {
 				break
 			}
 
-			// 如果 key 比 Tree 左子树的root 还小
+			// 如果 key 比 Tree 左子树的root 还小               // todo 这里先做一次 小的 旋转
 			if key < root.left.key { // zig-zig
 				curr = root.left /* right rotate  */
 				root.left = curr.right
@@ -106,6 +106,8 @@ func Top2ButtonSplay(root *SplayNode, key int) *SplayNode {
 					break
 				}
 			}
+
+			// todo  然后, 再将 旋转完的 右部分 接到 `r 树` 的左部分
 
 			// 在将 之前 key 的parent 和 grandpa 做了 右旋 之后, 从 新的 root 处做分裂,
 			// 将分裂完的 左边部分作为 继续for (因为 目标 key 留在左边部分),
@@ -137,6 +139,8 @@ func Top2ButtonSplay(root *SplayNode, key int) *SplayNode {
 			break
 		}
 	}
+
+	// todo 最最后,  拆 关键字节点的  子树, 分别取对接 `l 树`  和 `r 树`
 
 	// 到最后找到目标 key了, 这时候 内存中有,   `l树`   和  `当前key作为root 的 中间树` 和 `r树`
 	// 需要将中间树的 的左分支 作为 l树当前需要添加子树的 指针(临时root)出的 右子树
