@@ -164,7 +164,7 @@ func Top2ButtonSplay(root *SplayNode, key int) *SplayNode {
 
 
 
-func insert(root, newNode *SplayNode) *SplayNode {
+func insertSplayNode (root, newNode *SplayNode) *SplayNode {
 
 	var x, y *SplayNode
 	x = root
@@ -195,7 +195,7 @@ func insert(root, newNode *SplayNode) *SplayNode {
 	return root
 }
 
-func remove(root *SplayNode, key int) *SplayNode {
+func removeSplayNode (root *SplayNode, key int) *SplayNode {
 
 	var newRoot *SplayNode
 
@@ -229,7 +229,7 @@ func remove(root *SplayNode, key int) *SplayNode {
 }
 
 // 最小的值都在 left 子树
-func minimum (root *SplayNode) *SplayNode {
+func minimumSplayNode(root *SplayNode) *SplayNode {
 	if nil == root {
 		return nil
 	}
@@ -241,7 +241,7 @@ func minimum (root *SplayNode) *SplayNode {
 }
 
 // 最大值都在 right 子树
-func maximum (root *SplayNode) *SplayNode {
+func maximumSplayNode(root *SplayNode) *SplayNode {
 	if nil == root {
 		return nil
 	}
@@ -314,10 +314,10 @@ func (self *SplayTree) Top2ButtonSplay(key int) {
 // todo 插入操作
 //
 // 先按照 二叉树插入, 再将 key 旋转到 root 位置
-// 思想: 最新插入的可能 一会就会被查找
+// todo 思想: 最新插入的可能 一会就会被查找,  [所以 插入 也需要展开]
 
 func (self *SplayTree) insert(key int) {
-	self.root = insert(self.root, &SplayNode{key: key})
+	self.root = insertSplayNode(self.root, &SplayNode{key: key})
 	self.Top2ButtonSplay(key) // or self.Button2TopSplay(key)
 }
 
@@ -327,12 +327,12 @@ func (self *SplayTree) insert(key int) {
 //    若找到的话，则将该节点旋转为根节点，然后再删除该节点，之后将它的【前驱节点】作为根节点；
 //   如果它的前驱节点不存在，则根为它的右孩子。
 func (self *SplayTree) remove(key int) {
-	self.root = remove(self.root, key)
+	self.root = removeSplayNode(self.root, key)
 }
 
 // todo  找最小值
 func (self *SplayTree) minimum () *SplayNode {
-	if node := minimum(self.root); nil != node {
+	if node := minimumSplayNode(self.root); nil != node {
 		return node
 	}
 	return nil
@@ -340,7 +340,7 @@ func (self *SplayTree) minimum () *SplayNode {
 
 // todo  找最大值
 func (self *SplayTree) maximum () *SplayNode {
-	if node := maximum(self.root); nil != node {
+	if node := maximumSplayNode(self.root); nil != node {
 		return node
 	}
 	return nil
