@@ -135,8 +135,8 @@ func (t *RBTree) rightRotateRedBlack(node *RBNode) *RBNode {
 
 func insertValue(tree *RBTree, val, index int) {
 
-	tree.insertByButton2Top(val, index)
-	//tree.insertByTop2Button(val, index)  // todo 这个还有问题
+	//tree.insertByButton2Top(val, index)
+	tree.insertByTop2Button(val, index)  // todo 这个还有问题
 }
 
 // todo 由底向上 插入      二叉树 插入, 再调整树
@@ -277,7 +277,7 @@ func (t *RBTree) button2TopFixedUp(node *RBNode) {
 	t.Root.Color = BLACK
 }
 
-// todo 由顶向下 插入        边调整 边查找 插入位置
+// todo 由顶向下 插入        边调整 边查找 插入位置 【这个还有问题  不想了】
 func (t *RBTree) insertByTop2Button(val, index int) {
 
 
@@ -314,21 +314,39 @@ func (t *RBTree) insertByTop2Button(val, index int) {
 
 	*/
 
+	if 5 == val {
+		fmt.Println()
+	}
 
-	node := &RBNode{Value: val, Index: index}
+	node := &RBNode{Value: val, Index: index, Color: RED}
+
+	if nil == t.Root {
+		t.Root = node
+		t.Root.Color = BLACK
+		return
+	}
 
 	// todo 一边查询 一边做 tree 的调整
-	current := t.Root
-	parent := t.Root
-	gparent := t.Root
-	//ggparent := t.Root
+	var current, parent, gparent, ggparent *RBNode
 
-	for nil != current && val != current.Value { // 只有 key 没被插入 时 才会进入的 for
+	current = t.Root
+	parent = nil
+	gparent = nil
+	ggparent = nil
+
+	for nil != current && val != current.Value { // 只有 key 没被插入 时 才会进入的 for  todo  第一个节点不会进 for 哦, 因为 root 为 nil
+
+
+		/* todo 只有  左右 儿子都是 红 时， 达到了【让 兄弟节点 永远是 黑色】 的条件 */
+		if nil != current.Left && nil != current.Right && current.Left.Color == RED && current.Right.Color == RED {
+			// todo 变色 和 调整
+			t.Top2ButtonFixedUp(ggparent, gparent, parent, current, val)
+		}
 
 		/* todo 由定向下 遍历定位到 需要插入的位置 */
 
 		// 做个将 游标向下移动
-		//ggparent = gparent
+		ggparent = gparent
 		gparent = parent
 		parent = current
 
@@ -338,11 +356,12 @@ func (t *RBTree) insertByTop2Button(val, index int) {
 			current = current.Right
 		}
 
-		/* todo 只有  左右 儿子都是 红 时， 达到了【让 兄弟节点 永远是 黑色】 的条件 */
-		if current.Left.Color == RED && current.Right.Color == RED {
-			// todo 变色 和 调整
-			t.Top2ButtonFixedUp(gparent, parent, current, val)
+		// todo 找到当前 插入点了
+		if nil == current {
+			break
 		}
+
+
 	}
 
 	// 遍历到最后, 如果 最终的 游标指针 不是停留在 nil 则,
@@ -356,34 +375,45 @@ func (t *RBTree) insertByTop2Button(val, index int) {
 	// 遍历到了 叶子结点上了,  这时候需要在 当前位置插入 key 了
 	//
 	// 构造新节点
-	current = node
-	current.Color = RED   // 最后将 新加进来的 node 置为红色
+	current = node   // todo 注意 第一次进来时, root 是 nil 哦
 
 	// 插入节点
-	if current.Value < parent.Value {
-		parent.Left = current
-	} else {
-		parent.Right = current
+	if nil != parent {
+		if current.Value < parent.Value {
+			parent.Left = current
+		} else {
+			parent.Right = current
+		}
 	}
 
-	// todo 再次调整 (就是为了 放置 nil 节点为  黑色 ??)
-	t.Top2ButtonFixedUp(gparent, parent, current, val)
+	// todo 再次调整 (就是为了 放置 nil 节点为  黑色 ??)，
+	//		第一次进来时因为 是放置 root 节点, 所以也需要 做颜色调整
+	t.Top2ButtonFixedUp(ggparent, gparent, parent, current, val)
 }
 
-func (t *RBTree) Top2ButtonFixedUp(gparent, parent, current *RBNode, val int) {
+func (t *RBTree) Top2ButtonFixedUp(ggparent, gparent, parent, current *RBNode, val int) {
+
+
 
 	// todo  这个 函数 最终导致 需要插入的点被一步步的往上 提 一点 (当然 不是 一直提到顶哦)
 
 	// 先将 当前 节点 变为 红, 及他的两个 儿子变为 黑
 	current.Color = RED
-	current.Left.Color = BLACK
-	current.Right.Color = BLACK
+	if nil != current.Left {
+		current.Left.Color = BLACK
+	}
+	if nil != current.Right {
+		current.Right.Color = BLACK
+	}
+
 
 	// 如果 【红父】
-	if parent.Color == RED {
+	if nil != parent && parent.Color == RED {
 
 		// 将 爷爷 变成 红色
-		gparent.Color = RED
+		if nil != gparent {
+			gparent.Color = RED
+		}
 
 		//
 		// 下面是决定做 单旋 还是 双旋 (一字 还是 Z字)
@@ -395,9 +425,16 @@ func (t *RBTree) Top2ButtonFixedUp(gparent, parent, current *RBNode, val int) {
 			/* parent = t.Rotate(gparent, node.Value) // 使用下面的形式 写明白的 */
 			if val < parent.Value {
 				parent = RightRotateRedBlackNode(parent) // 右旋
+				if nil != gparent {
+					gparent.Right = parent   // 这里需要给 gparent 的 Right 指针 使用 新的parent重新赋值
+				}
 			} else {
 				parent = LeftRotateRedBlackNode(parent) // 左旋
+				if nil != gparent {
+					gparent.Left = parent
+				}
 			}
+
 		}
 
 		/* current = t.Rotate(ggparent, node.Value) // 使用下面的形式 写明白的  */
@@ -410,10 +447,21 @@ func (t *RBTree) Top2ButtonFixedUp(gparent, parent, current *RBNode, val int) {
 		//
 		// 如果是 Z字型的话, 最新的 current 指向 原来的 current node, 原current 现在是 三层树的 新root
 		if val < gparent.Value {
-			current = RightRotateRedBlackNode(gparent)
+			gparent = RightRotateRedBlackNode(gparent)    // 原先 gparent 的位置 有新元素 替代
 		} else {
-			current = LeftRotateRedBlackNode(gparent)
+			gparent = LeftRotateRedBlackNode(gparent)
 		}
+
+		current = gparent   // todo 将 curr 指针指向 新的 gparent
+
+		if nil != ggparent {
+			if val < ggparent.Value {
+				ggparent.Left = gparent
+			} else {
+				ggparent.Right = gparent
+			}
+		}
+
 
 		// 调整 树结构  重新 遍历新节点  (在这颗 小的 三层树中 的 root 我们置为 黑)
 		// todo 请看 【由底向上】部分,  这个和 红黑树的 root是黑的 性质无关, 因为这不是整棵树的 root 而是我们局部旋转的 三层小树的 新root
