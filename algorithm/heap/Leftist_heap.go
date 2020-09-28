@@ -216,19 +216,15 @@ func (h *leftistHeap) insert(key int) {
 	h.root = mergeLeftistNode(h.root, node)
 }
 
-func (h *leftistHeap) removeRoot() *leftstNode {
+func (h *leftistHeap) removeRoot() {
 	if nil == h.root {
-		return nil
+		return
 	}
-
-	node := h.root
 
 	left := h.root.left
 	right := h.root.right
-
 	h.root = mergeLeftistNode(left, right)
-
-	return node
+	return
 }
 
 // 删除某个节点 (我自己写的)
