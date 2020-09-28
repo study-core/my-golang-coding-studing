@@ -6,6 +6,8 @@ import (
 
 // 左式堆
 // https://www.cnblogs.com/skywang12345/p/3638384.html  (图很详细)
+
+// todo 左倾堆 能保证 堆头是中位数 ??
 func main() {
 		arr := []int {1, 5, 8, 7, 6, 4, 12, 3, 14, 2}
 		//arr := []int {10, 40, 24, 30, 36, 20, 12, 16 }
