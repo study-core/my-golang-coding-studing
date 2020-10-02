@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	//items := []int{4, 202, 3, 9, 6, 5, 1, 43, 506, 2, 0, 8, 7, 100, 25, 4, 5, 97, 1000, 27}
+	items := []int{4, 202, 3, 9, 6, 5, 1, 43, 506, 2, 0, 8, 7, 100, 25, 4, 5, 97, 1000, 27}
 
 	//items := make([]int, 0)
 	//myRand := rand.New(rand.NewSource(2^256 -1))
@@ -20,10 +20,13 @@ func main() {
 	//	2010250, 1580250, 1623250, 1666250, 1709250, 1795250, 1569500, 1655500, 1698500, 1741500, 1784500,
 	//	1644750, 1752250, 1827500, 1988750, 2031750, 2074750}
 
-	items := []int{2, 3, 1}
+	//items := []int{2, 3, 1}
 
 	//heapSort3(items)
-	insertSort1(items)
+	//insertSort1(items)
+	//quickSort2(items)
+	quickSort4(items)
+	//quickSort3(items)
 	fmt.Println(items)
 	//fmt.Println(items[len(items) - 7:])
 	//HeapSearchK(items, 7)
@@ -274,6 +277,197 @@ func partition(arr []int, left int, right int) int {
 	 			  且返回该基准数最终的位置，把数组分为左右两部分各自进入新的递归。
 	 */
 	return left
+}
+
+
+// todo  三分单向快排
+// 		之前的 都是 单轴快排
+//		下面这种是一种 是 单轴的优化，  减少了当 元素相等时 也要做 互换的无脑动作
+func quickSort3 (arr []int) {
+	suffleThreeWay(arr, 0, len(arr) - 1)
+}
+
+func suffleThreeWay (arr []int, left, right int) {
+
+	//	最开始:
+	//
+	//  | - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+	//
+	//	left, k																			right
+	//	pivot = arr[left]
+	//
+	//
+	//  过程中 呈现的是:
+	//
+	//	| - - - - - - - - - | - - - - - - - - - | - - - - - - - - - - | - - - - - - - - - |
+	//
+	//	left                lt      			k					  gt				right
+	//
+	// 		   小于  pivot			等于 pivot			还没处理的			大于 pivot
+	//
+	//
+	//	最后是:
+	//
+	//	| - - - - - - - - - - - - - | - - - - - - - - - - - | - - - - - - - - - - - - - - |
+	//
+	//	left						lt						gt							right
+	//
+	//			小于 pivot 的			等于 pivot 的					大于 pivot 的
+	//
+	//
+	if left < right  {
+		pivot := arr[left]
+		lt := left
+		gt := right
+		k := left + 1  // 第一个元素是切分元素，所以指针i可以从lo+1开始
+		for k <= gt {
+			if arr[k] < pivot {   // 小于切分元素的放在lt左边，因此指针lt和指针i整体右移
+				arr[lt], arr[k] = arr[k], arr[lt]
+				lt++
+				k++
+			} else if arr[k] > pivot {  // 大于切分元素的放在gt右边，因此指针gt需要左移
+				arr[gt], arr[k] = arr[k], arr[gt]
+				gt--
+			} else {
+				k++
+			}
+		}
+
+		// lt - gt 的元素已经排定，只需对 it左边 和 gt右边 的元素进行递归求解
+		suffleThreeWay(arr, left, lt- 1)
+		suffleThreeWay(arr, gt+ 1, right)
+	}
+}
+
+// todo  三分 双向 快排
+//		是 三分 单向 的一种优化， (亦是 单轴 的一种优化)
+//func
+
+
+
+
+
+// todo 双轴 快排 (最优 写法??)
+//		双轴快速排序算法思路和三向切分快速排序算法的思路基本一致，
+// 		双轴快速排序算法使用两个轴 （pivot），通常选取最左边的元素作为pivot1 和 最右边的元素作pivot2.
+// 		首先要比较这两个轴的大小，如果pivot1 > pivot2，则交换最左边的元素和最右边的元素，已保证pivot1 <= pivot2,
+// 		双轴快速排序同样使用i，j，k三个变量将数组分成四部分.
+
+func quickSort4 (arr []int) {
+	doublePivot(arr, 0, len(arr) - 1)
+}
+
+func doublePivot(arr []int, left, right int) {
+	/**
+
+	todo https://www.cnblogs.com/nullzx/p/5880191.html
+	todo https://blog.csdn.net/Holmofy/article/details/71168530
+
+	| pivot1, - - - - - - - - - - - - - - - | - - - - - - - - - - - - - - - - | - - - - - - - - - - - - - - - - - | - - - - - - - - - -  - - - - - - , pivot2 |
+
+	left,  | - - - - - - - -  - - - - - - i | - - - - - - - - - - - - - - - - | k - - - - - - - - - - - - - - - - | j - - - - - - - - - - - - -  - - | right
+				 x < pivot1                     pivot1  <= x  <= pivot2 				还未处理部分					pivot2 < x
+
+	todo 步骤
+		A[L+1, i]    	是小于pivot1的部分，
+		A[i+1, k-1]		是大于等于pivot1且小于等于pivot2的部分，
+		A[j, R]			是大于pivot2的部分，而A[k, j-1]是未知部分。
+
+		todo 和三向切分的快速排序算法一样，初始化 i = L，k = L+1，j=R，k自   左向右   扫描直到 k与j 相交为止（k == j）。
+			我们扫描的目的就是逐个减少未知元素，并将每个元素按照和pivot1和pivot2的大小关系放到不同的区间上去。
+
+		todo 在k的扫描过程中我们可以对a[k]分为三种情况讨论（注意我们始终保持最左边和最右边的元素，即双轴，不发生交换）
+
+			（1）a[k] < pivot1   i先自增，交换a[i]和a[k]，k自增1，k接着继续扫描
+
+			（2）a[k] >= pivot1 && a[k] <= pivot2 k自增1，k接着继续扫描
+
+			（3）a[k] > pivot2: 这个时候显然a[k]应该放到最右端大于pivot2的部分。
+								但此时，我们不能直接将   a[k]与j的下一个位置a[--j]交换
+								（可以认为 A[j]  与 pivot1 和 pivot2 的大小关系在上一次j自右向左的扫描过程中就已经确定了，这样做主要是 j 首次扫描时避免 pivot2 参与其中），
+								因为目前 a[--j] 和 pivot1 以及 pivot2 的关系未知，所以我们这个时候应该从j的下一个位置（--j）自右向左扫描。
+								而a[--j]与pivot1和pivot2的关系可以继续分为三种情况讨论.
+
+			       3.1）a[--j] > pivot2 j接着继续扫描
+
+			       3.2）a[--j] >= pivot1且a[j] <= pivot2 交换a[k]和a[j]，k自增1，k继续扫描（注意此时j的扫描就结束了）
+
+			       3.3） a[--j] < pivot1 先将i自增1，此时我们注意到	a[j] < pivot1,  a[k] > pivot2,  pivot1 <= a[i] <=pivot2，
+										那么我们只需要将 a[j] 放到 a[i] 上，a[k] 放到 a[j] 上，而 a[i] 放到 a[k] 上。
+										k自增1，然后k继续扫描（此时j的扫描就结束了）
+
+
+
+	todo 注意：
+
+		1. 	pivot1 和 pivot2在始终不参与k，j扫描过程
+
+		2. 	扫描结束时，A[i]表示了小于pivot1部分的最后一个元素，A[j]表示了大于pivot2的第一个元素，
+		  	这时我们只需要交换pivot1（即A[L]）和A[i]，交换pivot2（即A[R]）与A[j]，
+			同时我们可以确定A[i]和A[j]所在的位置在后续的排序过程中不会发生变化
+			（这一步非常重要，否则可能引起无限递归导致的栈溢出），
+			todo 最后我们只需要对   A[L, i-1]，   A[i+1, j-1]，  A[j+1, R] 这三个部分继续递归上述操作即可。
+	 */
+
+	if left < right {
+
+		// 以 收尾 定位最开始的 pivot1 和  pivot2
+		if arr[left] > arr[right] {
+			arr[left], arr[right] = arr[right], arr[left] //保证pivot1 <= pivot2
+		}
+		pivot1 := arr[left]
+		pivot2 := arr[right]
+
+		i := left + 1
+		k := left + 1
+		j := right - 1
+
+	OUT_LOOP:
+		for k <= j {
+			if arr[k] < pivot1 {
+				arr[i], arr[k] = arr[k], arr[i]
+				k++
+				i++
+			}else {
+
+				if arr[k] >= pivot1 && arr[k] <= pivot2 {
+					k++
+				}else{
+
+					for arr[j] > pivot2 {
+						j--
+						if j < k { // 当 k 和 j 错过
+							break OUT_LOOP
+						}
+					}
+					if arr[j] >= pivot1 && arr[j] <= pivot2 {
+						arr[k], arr[j] = arr[j], arr[k]
+						k++
+						j--
+					}else{ // arr[j] < pivot1
+						arr[k], arr[j] = arr[j], arr[k] // 注意 k 不动
+						j--
+					}
+				}
+			}
+
+		}
+		i--
+		j++
+
+		// 最后  k 和 j 重合,  且 i  和 j 就是当前的 双轴, 以 轴为切点 分成三部分  x < pivot1 (arr[i]) | pivot1 <= y <= pivot2 | pivot2 (arr[j]) < z 继续递归 新的双轴
+
+		// todo 最后
+		arr[left], arr[i] = arr[i], arr[left]		//将pivot1交换到适当位置
+		arr[right], arr[j] = arr[j], arr[right]		//将pivot2交换到适当位置
+
+		//	一次双轴切分至少确定两个元素的位置，这两个元素将整个数组区间分成三份
+		doublePivot(arr, left, i-1)					// x 的取值范围
+		doublePivot(arr, i+1, j-1)					// y 的取值范围
+		doublePivot(arr, j+1, right)				// z 的取值范围
+	}
+
+
 }
 
 //////////////////////////////////////////////////////////////////////////////// 插入排序 ////////////////////////////////////////////////////////////////////////
