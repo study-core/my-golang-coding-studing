@@ -60,7 +60,7 @@ func longestPalindrome(s string) string {
 		len := maxFn(len1, len2)
 		//根据 i 和 len 求得字符串的相应下标
 		if len > end - start {
-			start = i - (len - 1) / 2
+			start = i - (len - 1) / 2    // 如:  a b c b f 则等于  4 - 0 - 1 == 3 (b c b), 则 start == 2 - (3 - 1)/2
 			end = i + len / 2
 		}
 	}
@@ -79,5 +79,5 @@ func expandAroundCenter (s string, left, right int) int {
 		L--
 		R++
 	}
-	return R - L - 1
+	return R - L - 1  // 如:  a b c b f 则等于  4 - 0 - 1 == 3 (b c b)
 }
