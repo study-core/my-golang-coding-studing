@@ -34,8 +34,9 @@ type lru_cache struct {
 	Capacity    uint64
 	Count 		uint64
 
-	Nodes      NodeMap
+	Nodes      NodeMap  // 存放 (hash(key) -> node)
 
+	// 头和尾 不是 有数据的 node， 只是 空node
 	Head 		*lru_node
 	Tail 		*lru_node
 }
@@ -70,6 +71,8 @@ func NewLruCache (capacity uint64) (*lru_cache, error) {
 		Tail:     nil,
 		Nodes:  make(NodeMap),
 	}
+
+	// 头 和 尾 都是 空节点
 	head :=  new(lru_node)
 	tail := new(lru_node)
 
@@ -88,14 +91,14 @@ func (cache *lru_cache) Put(key, value []byte) {
 
 	if !ok {
 		if cache.Count == cache.Capacity {
-			cache.removeNode()
+			cache.removeNode()  // 移除 队尾 的 node  (Tail的上一个)
 		}
 
 		nd = new(lru_node)
 		nd.Key = BytesToHash(key)
 		nd.Value = value
 
-		cache.addNode(nd)
+		cache.addNode(nd)  // 添加到队头 (Head的下一个)
 
 	} else {
 		nd.Value = value
@@ -108,13 +111,13 @@ func (cache *lru_cache) get(key []byte) []byte {
 
 	nd, ok := cache.Nodes[BytesToHash(key)]
 	if ok {
-		cache.moveNodeToHead(nd)
+		cache.moveNodeToHead(nd) // 每次找到时， 都 移动到 队头
 		return nd.Value
 	}
 	return nil
 }
 
-
+// 移除 队尾的 node
 func (cache *lru_cache) removeNode () {
 
 	nd := cache.Tail.Pre
@@ -124,6 +127,7 @@ func (cache *lru_cache) removeNode () {
 	cache.Count --
 }
 
+// 移除 当前节点
 func (cache *lru_cache) removeFromList(node *lru_node) {
 	pre := node.Pre
 	next := node.Next
@@ -134,13 +138,13 @@ func (cache *lru_cache) removeFromList(node *lru_node) {
 	node.Pre = nil
 	node.Next = nil
 }
-
+// 直接 添加一个节点
 func (cache *lru_cache) addNode (node *lru_node) {
 	cache.addToHead(node)
 	cache.Nodes[node.Key] = node
 	cache.Count ++
 }
-
+// 将 当前node 转移到 Head 的 下一个
 func (cache *lru_cache) addToHead(node *lru_node) {
 	next := cache.Head.Next
 
@@ -152,7 +156,7 @@ func (cache *lru_cache) addToHead(node *lru_node) {
 
 }
 
-func (cache *lru_cache) moveNodeToHead (node *lru_node) {
-	cache.removeFromList(node)
-	cache.addToHead(node)
+func (cache *lru_cache) moveNodeToHead (node *lru_node) {   // 将 当前node 转移到 Head 的 下一个
+	cache.removeFromList(node) // 移除当前节点
+	cache.addToHead(node)  // 将 当前node 转移到 Head 的 下一个
 }

@@ -60,8 +60,9 @@ todo 它大概分为三个步骤：
 		c、模式匹配（构造output表） 最后输出的 匹配结果集 个数和 []pat 一样
 
 
-构建前缀树:  首先我们将所有的目标字符串插入到Trie树中，然后通过广度优先遍历为每个结点的所有孩子节点的fail指针找到正确的指向
-			确定fail指针指向的问题和KMP算法中构造next数组的方式如出一辙。具体方法如下:
+构建前缀树: todo  首先我们将所有的目标字符串插入到Trie树中，
+			todo  然后通过【广度优先遍历】为每个结点的所有孩子节点的fail指针找到正确的指向
+			todo  确定fail指针指向的问题和KMP算法中构造next数组的方式如出一辙。具体方法如下:
 
 					1）将根结点的所有孩子结点的fail指向根结点，然后将根结点的所有孩子结点依次入列。
 
@@ -115,7 +116,7 @@ todo AC自动机的运行过程：
 
 // todo 代码实现
 
-const ASCII_Size = 128
+const ASCII_Size = 128   // ASCII 码是 0 - 127 共 128 个字符
 
 type acNode struct {
 
@@ -144,8 +145,8 @@ func NewAhoCorasickAutomation(patArr []string) *AhoCorasickAutomation {
 	ac := &AhoCorasickAutomation{}
 	ac.root = &acNode{}
 	ac.pats = patArr
-	ac.buildTrieTree()
-	ac.buildAcFromTrie()
+	ac.buildTrieTree()  	// 先构建 前缀树
+	ac.buildAcFromTrie()	// 在构建 failed  跳转  todo 【广度遍历 trie】
 	return ac
 }
 
@@ -155,12 +156,12 @@ func NewAhoCorasickAutomation(patArr []string) *AhoCorasickAutomation {
 func (self *AhoCorasickAutomation) buildTrieTree() {
 
 	// todo  使用  【广度遍历】
-	for i := 0; i < len(self.pats); i++ {
+	for i := 0; i < len(self.pats); i++ {  // 遍历 需要做匹配的 pat 数组  如:   pats :=[]string{"abcdef", "abhab", "bcd", "cde","cdfkcdf" }
 		// 从 root 开始 构建
 		curr := self.root
 		targetArr := []rune(self.pats[i])
 
-		for j := 0; j < len(targetArr); j++ {
+		for j := 0; j < len(targetArr); j++ {  // 单个 遍历 字符, 如: "abcdef"
 			ch := targetArr[j]
 			if nil == curr.Table[ch] {
 				curr.Table[ch] = &acNode{}

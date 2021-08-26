@@ -897,12 +897,20 @@ func heapSort3(arr []int) {
 	【2】 只要从n/2-1开始，向前依次构造大根堆，这样就能保证，构造到某个节点时，它的左右子树都已经是大根堆
 	比如现在有一个序列长度为15，序号0代表根节点则：
 							0
-						 /    \
+						 /    \				3 层的 二叉树的节点数为  2^3-1   （深度为 k 的二叉树,最多有2^k-1个节点）
 					    1      2
-	 	             /   \    /   \
+	 	             /   \    /   \			二叉树子树最多的节点的个数称为二叉树的度。度为2代表着深度 即该二叉树最多有三个节点
 	               3     4    5     6    todo 那么我们就是从 6 = 15/2 - 1 开始构造堆
 	             /  \   / \  / \   /  \
-	  		    7    8 9 10  11 12 13  14
+	  		    7    8 9 10  11 12 13  14  (下标 是 双数 结尾)
+
+		“二叉树bai中的度“是指树中du最大的结点度，叶子结点是终zhi端结点，是度dao为 0 的结点。
+
+	二叉树的度是指树中zhuan所以结点的度数的最大值。二叉树的度小于等于2，因为二叉树的定义要求二叉树中任意结点的度数（结点的分支数）小于等于2 ，并且两个子树有左右之分，顺序不可颠倒。
+
+	叶子结点就是度为0的结点，也就是没有子结点的结点叶子。如n0表示度为0的结点数，n1表示度为1的结点，n2表示度为2的结点数。在二叉树中：n0=n2+1；N=n0+n1+n2（N是总结点）。
+
+	todo 因为任一棵树中，结点总数 = 度数 * 该度数对应的结点数 + 1
 	 */
 	for i := len(arr)/2 - 1; i >= 0; i-- { // 先从 6 = 15/2 - 1 处开始构造最大化堆结构，然后依次从 5, 4, 3处构建最大化堆结构
 		heapAdjust4(arr, i, len(arr))      // todo 绝不会有 元素下标 == len(arr)
@@ -993,7 +1001,6 @@ func heapAdjust4 (arr []int, parent, end int) {
 //////////////////////////////////////////// topk (孤岛算法) ////////////////////////////////////////////
 
 func HeapSearchK (arr []int, topk int) {
-
 	// 初始化原始最小堆
 	smallHeapArr := buildSmallHeap(arr, topk)
 	for i := topk; i < len(arr); i ++ {
@@ -1002,10 +1009,7 @@ func HeapSearchK (arr []int, topk int) {
 			swapRoot(smallHeapArr, arr[i])
 		}
 	}
-	// 最大的K个数
-	fmt.Println(smallHeapArr)
 }
-
 //建立小顶堆 
 func buildSmallHeap(arr []int,topk int) []int{
 	smallHeapArr := arr[:topk]
@@ -1016,27 +1020,25 @@ func buildSmallHeap(arr []int,topk int) []int{
 }
 // 调整最小堆
 func adjustSmallHeap(arr []int, parent, end int) {
-	maxVal := parent
+	minVal := parent
 	for  {
 		lchild := 2*parent + 1
 		rchild := 2 *parent + 2
-		if lchild < end && arr[lchild] < arr[maxVal] {
-			maxVal = lchild
+		if lchild < end && arr[lchild] < arr[minVal] {
+			minVal = lchild
 		}
-
-		if rchild < end && arr[rchild] < arr[maxVal]{
-			maxVal = rchild
+		if rchild < end && arr[rchild] < arr[minVal]{
+			minVal = rchild
 		}
 		// 互换位置 (parent 和 最小叶子互换)
-		if parent != maxVal {
-			arr[maxVal], arr[parent] = arr[parent], arr[maxVal]
-			parent = maxVal
+		if parent != minVal {
+			arr[minVal], arr[parent] = arr[parent], arr[minVal]
+			parent = minVal
 		}else {
 			break
 		}
 	}
 }
-
 // 替换根部，且重新构造最小堆
 func swapRoot(arr []int, root int) {
 	arr[0] = root // 新的根
