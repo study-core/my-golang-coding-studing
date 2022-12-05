@@ -1,9 +1,9 @@
 package main
 
 import (
+	"container/heap"
 	"encoding/json"
 	"fmt"
-	"go1.14.6-analysis/src/container/heap"
 )
 
 type KallyMem struct {
@@ -92,6 +92,7 @@ func main() {
 
 	fmt.Println("\n---------------------------------------------------------\n")
 
+	// 遍历 queue ，将 term > 5 的移除， 并加入 starveQueue 中
 	i := 0
 	for {
 		if i == queue.Len() {
@@ -102,6 +103,8 @@ func main() {
 
 		// When the task in the queue meets hunger, it will be transferred to starveQueue
 		if bullet.Term >= 5 {
+			bulletByte, _ := json.Marshal(bullet)
+			fmt.Println("i is ", i, "bullet:", string(bulletByte))
 			heap.Push(starveQueue, bullet)
 			heap.Remove(queue, i)
 			i = 0

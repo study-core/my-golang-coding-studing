@@ -21,7 +21,7 @@ func main() {
 	//case  <- c:
 	//	fmt.Println("done")
 
-	case <- time.After(9 * time.Second):
+	case <- time.After(6 * time.Second):
 		fmt.Println("time out")
 	}
 }
