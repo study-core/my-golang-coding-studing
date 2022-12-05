@@ -1,8 +1,11 @@
 package main
 
 import (
+	//"fmt"
+	//"math/big"
+	"sync"
+	"time"
 	"fmt"
-	"math/big"
 )
 
 func main() {
@@ -66,7 +69,7 @@ func main() {
 	//}
 	//fmt.Printf("strconv.FormatInt, %d \n", time.Since(start3).Nanoseconds())
 
-	total, _ := new(big.Int).SetString("262215742000000000000000000", 10)
+	/*total, _ := new(big.Int).SetString("262215742000000000000000000", 10)
 	blocks, _ := new(big.Int).SetString("15759500", 10)
 
 	balance := new(big.Int).Div(total, blocks)
@@ -77,5 +80,21 @@ func main() {
 
 	num := new(big.Int).Div(MillionLAT, balance)
 
-	fmt.Println("num:", num)
+	fmt.Println("num:", num)*/
+
+
+	var mu sync.Mutex
+	   go func() {
+		   fmt.Println("里面直接 lock")
+		       mu.Lock()
+		   fmt.Println("里面已经 lock")
+		       time.Sleep(10 * time.Second)
+		   fmt.Println("里面直接 unlock")
+		       mu.Unlock()
+		   }()
+	   time.Sleep(time.Second)
+	   fmt.Println("外面直接 unlock")
+	    mu.Unlock()
+	fmt.Println("外面已经 unlock")
+	   select {}
 }
